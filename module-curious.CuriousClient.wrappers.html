@@ -27,7 +27,7 @@
     
 <header>
     <h2>
-        <span class="ancestors"><a href="module-curious.CuriousClient.html">.CuriousClient</a>.</span>
+        <span class="ancestors"><a href="module-curious.html">curious</a><a href="module-curious.CuriousClient.html">.CuriousClient</a>.</span>
     
     wrappers
     </h2>
@@ -69,7 +69,7 @@ Note that jQuery.post does not need a wrapper.</div>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1199">line 1199</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1340">line 1340</a>
     </li></ul></dd>
     
     
@@ -239,7 +239,7 @@ angular is not required by this module at all.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1255">line 1255</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1396">line 1396</a>
     </li></ul></dd>
     
     
@@ -264,9 +264,9 @@ angular is not required by this module at all.
     
             
 <div class="param-desc">
-    An ideal function for making requests in curious client:
+    A function that meets the requirements to make requests in the curious client:
  takes the url and arguments, makes a <code>POST</code> request and returns
- a promise that resolves directly to the returned query data (unwrapped).
+ a promise that resolves directly to the returned query response (unwrapped).
 </div>
 
 
@@ -433,7 +433,7 @@ axios is not required by this module at all.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1231">line 1231</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1372">line 1372</a>
     </li></ul></dd>
     
     
@@ -458,9 +458,9 @@ axios is not required by this module at all.
     
             
 <div class="param-desc">
-    An ideal function for making requests in curious client:
+    A function that meets the requirements to make requests in the curious client:
  takes the url and arguments, makes an axios post request, and returns
- a promise that resolves directly to the returned query data (unwrapped).
+ a promise that resolves directly to the returned query response (unwrapped).
 </div>
 
 
@@ -491,7 +491,7 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
         
             
 <dt>
-    <h4 class="name" id="CuriousClient.wrappers.ironRequest"><span class="type-signature">&lt;static> </span>CuriousClient.wrappers.ironRequest<span class="signature">(ironRequestElement, options)</span><span class="type-signature"> &rarr; {function}</span></h4>
+    <h4 class="name" id="CuriousClient.wrappers.ironAjax"><span class="type-signature">&lt;static> </span>CuriousClient.wrappers.ironAjax<span class="signature">(ironAjaxElement, options)</span><span class="type-signature"> &rarr; {function}</span></h4>
     
     
 </dt>
@@ -500,7 +500,7 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
     
     <div class="description">
         Convenience function to make it easier to interact with Polymer's
-<code>&lt;iron-request&gt;</code> element.
+<code>&lt;iron-ajax&gt;</code> element.
     </div>
     
 
@@ -536,7 +536,7 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
 	
         <tr>
             
-                <td class="name"><code>ironRequestElement</code></td>
+                <td class="name"><code>ironAjaxElement</code></td>
             
             
             <td class="type">
@@ -560,7 +560,7 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
             
             
             
-            <td class="description last">The <code>iron-request</code> element being used to make the request.</td>
+            <td class="description last">The <code>iron-ajax</code> element being used to make the request.</td>
         </tr>
 	
 	
@@ -624,7 +624,7 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1277">line 1277</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1418">line 1418</a>
     </li></ul></dd>
     
     
@@ -649,10 +649,10 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
     
             
 <div class="param-desc">
-    An ideal function for making requests in curious client:
+    A function that meets the requirements to make requests in the curious client:
  takes the url and arguments, makes a <code>POST</code> request with
- <code>ironRequestElement</code>, and returns a promise that resolves
- directly to the returned query data (unwrapped).
+ <code>ironAjaxElement</code>, and returns a promise that resolves
+ directly to the returned query response (unwrapped).
 </div>
 
 
@@ -674,7 +674,7 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
     
         <h5>Example</h5>
         
-    <pre class="prettyprint"><code>var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.ironRequest(this.$.xhr) ...)</code></pre>
+    <pre class="prettyprint"><code>var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.ironAjax(this.$.xhr) ...)</code></pre>
 
     
 </dd>
@@ -695,13 +695,13 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Wed Jun 29 2016 13:08:15 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Jul 02 2016 00:37:09 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

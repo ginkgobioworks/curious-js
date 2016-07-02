@@ -25,7 +25,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source"><code>/***
+            <pre class="prettyprint source"><code>/**
  * Module for curious client-side query construction and JSON parsing.
  *
  * @module curious
@@ -58,11 +58,14 @@
    * @param {string} term The internal term text to use.
    */
   var QueryTerm = function (term) {
-    /** The term contents
-    * @readonly
-    * @public
-    */
+    /**
+     * The term contents
+      * @readonly
+      * @public
+      * @return {string} The term contents
+      */
     this.term = function () { return term; };
+
     return this;
   };
 
@@ -106,6 +109,8 @@
    * @class
    * @extends {module:curious~QueryTerm}
    * @alias module:curious~QueryTermFollow
+   *
+   * @param {string} term The term contents.
    */
   var QueryTermFollow = function (term) {
     QueryTerm.call(this, term);
@@ -121,6 +126,8 @@
    * @class
    * @extends {module:curious~QueryTerm}
    * @alias module:curious~QueryTermHaving
+   *
+   * @param {string} term The term contents.
    */
   var QueryTermHaving = function (term) {
     QueryTerm.call(this, term);
@@ -138,8 +145,12 @@
   /**
    * Make a term that performs a negative filter.
    *
+   * @private
    * @class
    * @extends {module:curious~QueryTerm}
+   * @alias module:curious~QueryTermHaving
+   *
+   * @param {string} term The term contents.
    */
   var QueryTermNotHaving = function (term) {
     QueryTerm.call(this, term);
@@ -161,6 +172,8 @@
    * @class
    * @extends {module:curious~QueryTerm}
    * @alias module:curious~QueryTermWith
+   *
+   * @param {string} term The term contents.
    */
   var QueryTermWith = function (term) {
     QueryTerm.call(this, term);
@@ -168,7 +181,7 @@
     return this;
   };
   QueryTermWith.prototype = new QueryTerm();
-  
+
   QueryTermWith.prototype.leftJoin = function () { return true; };
 
   QueryTermWith.prototype.toString = function () {
@@ -274,9 +287,9 @@
       // commas are inserted to ensure that the objects that correspond to
       // those terms are returned
       if (termIndex > 0) {
-        if (term.conditional())
+        if (term.conditional()) {
           query += ' ';
-        else if (
+        } else if (
           !term.conditional()
           && !terms[termIndex - 1].leftJoin()
           && !term.leftJoin()
@@ -364,7 +377,7 @@
       this.terms.push(termObject);
       this.relationships.push(relationship);
     } else {
-      throw (
+      throw new Error(
         'Must specify a term and a relationship to append to: ('
         + this.query()
         + ')'
@@ -414,7 +427,7 @@
       // reference copy
       this.terms[this.terms.length - 1] = lastTerm;
     } else {
-      throw('Must add terms before appending "' + termObject + '" to them.');
+      throw new Error('Must add terms before appending "' + termObject + '" to them.');
     }
 
     return this;
@@ -445,6 +458,8 @@
    *   The contents of the starting term.
    * @param {string} relationship
    *   The name of this term in inter-term relationships
+   * @param {function} customConstructor
+   *   A custom constructor function for the resulting objects.
    *
    * @return {CuriousQuery} The query object, with the term appended
    */
@@ -523,7 +538,7 @@
     if (this.objectFactories.length) {
       this.objectFactories[this.objectFactories.length - 1] = factoryFunction;
     } else {
-      throw('Cannot specify custom object constructor before starting a query');
+      throw new Error('Cannot specify custom object constructor before starting a query');
     }
 
     return this;
@@ -629,7 +644,6 @@
    * @alias module:curious.CuriousObjects
    */
   var CuriousObjects = (function () {
-
     /**
      * Base (default) class for an object returned from a Curious query
      *
@@ -640,9 +654,10 @@
      * @param {Object} objectData
      *   A plain JavaScript object representing the query data, as parsed from
      *   the returned JSON.
-     *
+     * @param {boolean?} camelCase
+     *   If true, construct camel-cased versions the fields in objectData.
      */
-    function CuriousObject(objectData) {
+    function CuriousObject(objectData, camelCase) {
       var newObject = this;
 
       // Special properties that aren't data-bearing, but are often convenient
@@ -651,7 +666,13 @@
 
       // Copy over the object data to be properties of the new CuriousObject
       Object.keys(objectData).forEach(function (key) {
-        newObject[key] = objectData[key];
+        var newKey = key;
+
+        if (camelCase) {
+          newKey = CuriousObjects.makeCamelCase(key);
+        }
+
+        newObject[newKey] = objectData[key];
       });
 
       return newObject;
@@ -679,17 +700,19 @@
      *   The url of every object, if they have one
      * @param {string} model
      *   The name of the Django model these objects come from
-     * @param {function} customConstructor
+     * @param {function?} customConstructor
      *   A constructor to use instead of the default CuriousObject constructor.
+     * @param {boolean?} camelCase
+     *   If true, construct camel-cased versions of the JSON objects returned
+     *   by the Curious server.
      *
      * @return {Array&lt;CuriousObject|CustomConstructorClass>}
      *   An array of objects, which contain the data described in queryData.
      */
-    function _parseObjects(queryData, model, customConstructor) {
+    function _parseObjects(queryData, model, customConstructor, camelCase) {
       var objects = [];
 
       if (queryData.objects instanceof Array) {
-
         queryData.objects.forEach(function (objectDataArray, objectIndex) {
           var url = queryData.urls[objectIndex];
           var objectData = {};
@@ -708,14 +731,19 @@
             // got all the fields assigned, so we should do it ourselves just
             // in case for any fields the constructor might have missed.
             queryData.fields.forEach(function (fieldName) {
+              var newFieldName = fieldName;
+
+              if (camelCase) {
+                newFieldName = CuriousObjects.makeCamelCase(fieldName);
+              }
+
               // NOTE: don't check for obj.hasOwnProperty - we actually want to
               // override existing fields in obj
-              obj[fieldName] = objectData[fieldName];
+              obj[newFieldName] = objectData[fieldName];
             });
-
           } else {
             // The CuriousObject constructor does this automatically
-            obj = new CuriousObject(objectData);
+            obj = new CuriousObject(objectData, camelCase);
           }
 
           // Set the magic fields
@@ -740,6 +768,8 @@
      *
      * @param {string[]} relationships
      *   The names of the relationships objects will have to one another.
+     * @param {function[]} customConstructors
+     *   The custom constructors for curious object classes.
      * @param {Object} queryJSONResponse
      *   An object of fields holding the query response, as returned and parsed
      *   directly from JSON without any post-processing.
@@ -763,19 +793,22 @@
      * @param {Array&lt;Object&lt;number,Object>>} existingObjects
      *   The existing objects. Each object in the array is a mapping of an id
      *   to its corresponding object.
+     * @param {boolean?} camelCase
+     *   If true, construct camel-cased versions of the JSON objects returned
+     *   by the Curious server.
      *
-     * @return {{objects: Object[], trees: Object[]}
+     * @return {{objects: Object[], trees: Object[]}}
      *   The parsed objects. &lt;code>trees&lt;/code> holds any hierarchical
      *   relationships, for recursive queries.
      */
     function parse(
-      relationships, customConstructors, queryJSONResponse, existingObjects
+      relationships, customConstructors, queryJSONResponse, existingObjects,
+      camelCase
     ) {
       var combinedObjects = [];
       var trees = [];
 
       if (queryJSONResponse.data instanceof Array) {
-
         queryJSONResponse.data.forEach(function (queryData, queryIndex) {
           var queryObjects; // the objects parsed from this query
           var objectsByID = {};
@@ -789,7 +822,9 @@
             // Only pass in custom constructors if we need to
             (customConstructors instanceof Array)
               ? customConstructors[queryIndex]
-              : undefined
+              : null,
+
+            camelCase
           );
 
           queryObjects.forEach(function (object) {
@@ -814,7 +849,6 @@
         // For each subquery, add a relationship to the results of the next
         // subquery and then a reverse relationship
         queryJSONResponse.results.forEach(function (queryResult, queryIndex) {
-
           // An array of pairs: [objectID, srcObjectID], where
           // the srcObjectID points to the ID of the object that this
           // object is joined from (the 'source' of the join)
@@ -828,6 +862,11 @@
 
           var forwardRelationshipName = relationships[queryIndex];
           var reverseRelationshipName = relationships[joinIndex];
+
+          if (camelCase) {
+            forwardRelationshipName = CuriousObjects.makeCamelCase(forwardRelationshipName);
+            reverseRelationshipName = CuriousObjects.makeCamelCase(reverseRelationshipName);
+          }
 
           var joinSourceObjects = combinedObjects[joinIndex];
           var joinDestinationObjects = combinedObjects[queryIndex];
@@ -847,7 +886,8 @@
             joinIDPairs.forEach(function (joinIDPair) {
               var id = joinIDPair[0];
               var srcID = joinIDPair[1]; // the ID of the parent
-              var obj, srcObj; // the corresponding objects
+              var obj;
+              var srcObj; // the corresponding objects
 
 
               if (srcID) {
@@ -956,9 +996,94 @@
      *                  with duplicates removed, in the same order as the input
      *                  object list.
      */
-    function idString(objects) {
-      var ids = idList(objects);
+    function idString(arrayOfObjects) {
+      var ids = idList(arrayOfObjects);
       return ids.join(',');
+    }
+
+    /**
+     * Camel case a string with - or _ separators:
+     *
+     * @example
+     * CuriousObjects.makeCamelCase('this_is-someTHING') === 'thisIsSomething'
+     * CuriousObjects.makeCamelCase('_alreadyDone') === '_alreadyDone'
+     *
+     * @memberof module:curious.CuriousObjects
+     *
+     * @param {string} input The string to camel-case.
+     *
+     * @return {string} The input, camel-cased.
+     */
+    function makeCamelCase(input) {
+      var components;
+      var casedComponents;
+      var separators;
+      var output = input;
+
+      if (input) {
+        // For leading/trailing separators
+        separators = {
+          leading: {
+            re: /^[-_]+/g,
+            match: null,
+            text: '',
+          },
+          trailing: {
+            re: /[-_]+$/g,
+            match: null,
+            text: '',
+          },
+        };
+
+        // Match the leading/trailing separators and store the text
+        Object.keys(separators).forEach(function (key) {
+          var separatorType = separators[key];
+          separatorType.match = separatorType.re.exec(input);
+          if (separatorType.match) {
+            separatorType.text = separatorType.match[0];
+          }
+        });
+
+        if (separators.leading.text.length === input.length) {
+          // Special case: string consists entirely of separators: just return it
+          output = input;
+        } else {
+          // Only split the parts of the string that are not leading/trailing
+          // separators
+          components = input.substring(
+            separators.leading.text.length,
+            input.length - separators.trailing.text.length
+          ).split(/[_-]/);
+
+          // If we don't have anything to camel-case, just leave the body alone
+          if (components.length > 1) {
+            casedComponents = components.map(function (component, ix) {
+              // Normalize by lowercasing everything
+              var casedComponent = component.toLowerCase();
+
+              // Capitalize every word but the first
+              if (ix > 0) {
+                casedComponent = (
+                  casedComponent.charAt(0).toUpperCase()
+                  + casedComponent.slice(1)
+                );
+              }
+
+              return casedComponent;
+            });
+          } else {
+            casedComponents = components;
+          }
+
+          output = (
+            separators.leading.text
+            + casedComponents.join('')
+            + separators.trailing.text
+          );
+        }
+      }
+
+      return output;
     }
 
     return {
@@ -967,8 +1092,8 @@
       groupObjectsByID: groupObjectsByID,
       idList: idList,
       idString: idString,
+      makeCamelCase: makeCamelCase,
     };
-
   }());
 
   // QUERY CLIENT
@@ -979,15 +1104,20 @@
    *
    * @param {string[]} relationships The relationship names
    * @param {Array&lt;Array&lt;Object>>} objects The objects from each relationship
+   * @param {boolean?} camelCase Whether or not to camel-case the relationship names
    *
-   * @return {Object&lt;string,Array>}
+   * @return {Object&lt;string,Array>} The rearranged results
    */
-  function _convertResultsToOutput(relationships, objects) {
+  function _convertResultsToOutput(relationships, objects, camelCase) {
     var output = {};
 
     objects.forEach(function (object, objectIndex) {
       var relationship = relationships[objectIndex];
       var uniqueIndex = 2;
+
+      if (camelCase) {
+        relationship = CuriousObjects.makeCamelCase(relationship);
+      }
 
       // If there is already a key in the object with the existing relationship
       // name, add a number after it to make it unique.
@@ -1049,11 +1179,13 @@
    */
   function _groupArraysOfObjectsByID(arrayOfArraysOfObjects) {
     return arrayOfArraysOfObjects.map(function (arrayOfObjects) {
+      var group = null;
+
       if (arrayOfObjects) {
-        return CuriousObjects.groupObjectsByID(arrayOfObjects);
-      } else {
-        return null;
+        group = CuriousObjects.groupObjectsByID(arrayOfObjects);
       }
+
+      return group;
     });
   }
 
@@ -1079,14 +1211,16 @@
    *   Default parameters to send to the serever with every query performed by
    *   this client; see {@link module:curious.CuriousClient#performQuery} for an
    *   explanation of what each parameter means.
-   * @param {boolean} quiet
+   * @param {boolean?} quiet
    *   Unless true, log every query to the console.
+   * @param {boolean?} camelCase
+   *   If true, construct camel-cased versions of the JSON objects returned
+   *   by the Curious server.
    *
    * @return {{performQuery: function}}
    *   A client object with a single performQuery method.
    */
-  var CuriousClient = function (curiousURL, request, clientDefaultArgs, quiet) {
-
+  var CuriousClient = function (curiousURL, request, clientDefaultArgs, quiet, camelCase) {
     return {
       /**
        * Perform a Curious query and return back parsed objects.
@@ -1133,13 +1267,16 @@
        */
       performQuery: function (q, relationships, constructors, params, existingObjects) {
         var args;
+        var groupedExistingObjects;
 
         if (!quiet) {
+          /* eslint-disable no-console */
           console.info(q);
+          /* eslint-enable no-console */
         }
 
         if (existingObjects) {
-          existingObjects = _groupArraysOfObjectsByID(existingObjects);
+          groupedExistingObjects = _groupArraysOfObjectsByID(existingObjects);
         }
 
         args = _getArgs(params, clientDefaultArgs);
@@ -1148,11 +1285,15 @@
         return request(curiousURL, args)
           .then(function (response) {
             var parsedResult = CuriousObjects.parse(
-              relationships, constructors, response.result, existingObjects
+              relationships,
+              constructors,
+              response.result,
+              groupedExistingObjects,
+              camelCase
             );
 
             return {
-              objects: _convertResultsToOutput(relationships, parsedResult.objects),
+              objects: _convertResultsToOutput(relationships, parsedResult.objects, camelCase),
               trees: parsedResult.trees,
             };
           });
@@ -1180,9 +1321,9 @@
    *   Additional options to send to the requesting function.
    *
    * @return {function(string, Object): Promise}
-   *  An ideal function for making requests in curious client:
-   *  takes the url and arguments, makes an axios post request, and returns
-   *  a promise that resolves directly to the returned query data (unwrapped).
+   *  A function that meets the requirements to make requests in the curious client:
+   *  takes the url and arguments, makes a POST request, and returns
+   *  a promise that resolves directly to the returned query response (unwrapped).
    */
   function _unwrapResponseData(defaultModuleName, moduleObjectOrFunction, options) {
     var mod;
@@ -1251,9 +1392,9 @@
    *   Additional options to send to the requesting function.
    *
    * @return {function(string, Object): Promise}
-   *  An ideal function for making requests in curious client:
+   *  A function that meets the requirements to make requests in the curious client:
    *  takes the url and arguments, makes an axios post request, and returns
-   *  a promise that resolves directly to the returned query data (unwrapped).
+   *  a promise that resolves directly to the returned query response (unwrapped).
    */
   CuriousClient.wrappers.axios = _unwrapResponseData.bind(ex, 'axios');
 
@@ -1275,41 +1416,63 @@
    *   Additional options to send to the requesting function.
    *
    * @return {function(string, Object): Promise}
-   *  An ideal function for making requests in curious client:
+   *  A function that meets the requirements to make requests in the curious client:
    *  takes the url and arguments, makes a &lt;code>POST&lt;/code> request and returns
-   *  a promise that resolves directly to the returned query data (unwrapped).
+   *  a promise that resolves directly to the returned query response (unwrapped).
    */
   CuriousClient.wrappers.angular = _unwrapResponseData.bind(ex, '$http');
 
   /**
    * Convenience function to make it easier to interact with Polymer's
-   * &lt;code>&lt;iron-request&gt;&lt;/code> element.
+   * &lt;code>&lt;iron-ajax&gt;&lt;/code> element.
    *
    * @example
-   * var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.ironRequest(this.$.xhr) ...)
+   * var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.ironAjax(this.$.xhr) ...)
    *
    * @memberof module:curious.CuriousClient.wrappers
    *
-   * @param {PolymerElement} ironRequestElement
-   *   The &lt;code>iron-request&lt;/code> element being used to make the request.
+   * @param {PolymerElement} ironAjaxElement
+   *   The &lt;code>iron-ajax&lt;/code> element being used to make the request.
    * @param {Object?} options
    *   Additional options to send to the requesting function.
    *
    * @return {function(string, Object): Promise}
-   *  An ideal function for making requests in curious client:
+   *  A function that meets the requirements to make requests in the curious client:
    *  takes the url and arguments, makes a &lt;code>POST&lt;/code> request with
-   *  &lt;code>ironRequestElement&lt;/code>, and returns a promise that resolves
-   *  directly to the returned query data (unwrapped).
+   *  &lt;code>ironAjaxElement&lt;/code>, and returns a promise that resolves
+   *  directly to the returned query response (unwrapped).
    */
-  CuriousClient.wrappers.ironRequest = function (ironRequestElement, options) {
+  CuriousClient.wrappers.ironAjax = function (ironAjaxElement, options) {
     return function (url, args) {
-      var requestParameters = Object.create(Object.prototype, options || {});
+      var oldAutoValue;
+      var request;
 
-      requestParameters.method = 'POST';
-      requestParameters.url = url;
-      requestParameters.params = args;
+      // Don't make requests while we're setting the properties
+      oldAutoValue = ironAjaxElement.get('auto');
+      ironAjaxElement.set('auto', false);
 
-      return ironRequestElement.send(requestParameters);
+      if (options) {
+        Object.keys(options).forEach(function (option) {
+          ironAjaxElement.set(option, options[option]);
+        });
+      }
+
+      ironAjaxElement.set('method', 'POST');
+      ironAjaxElement.set('url', url);
+      ironAjaxElement.set('contentType', 'application/json');
+      ironAjaxElement.set('body', args);
+
+      request = ironAjaxElement.generateRequest();
+
+      // Return auto to its old state
+      ironAjaxElement.set('auto', oldAutoValue);
+
+      // Return the promise that gets fired when the XHR completes, but parse
+      // out the actual response data, since the original promise resolves to
+      // the iron-request object
+      return request.completes.then(function (ironRequestObject) {
+        return ironRequestObject.response;
+      });
     };
   };
 
@@ -1330,13 +1493,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
 <br clear="both">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Wed Jun 29 2016 13:08:15 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Jul 02 2016 00:37:08 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
