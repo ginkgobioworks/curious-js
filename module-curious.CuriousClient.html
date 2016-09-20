@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>JSDoc: Class: CuriousClient</title>
-    
+
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
@@ -16,78 +16,82 @@
 <body>
 
 <div id="main">
-    
+
     <h1 class="page-title">Class: CuriousClient</h1>
+
     
-    
+
 
 
 
 <section>
-    
+
 <header>
-    <h2>
-        <span class="ancestors"><a href="module-curious.html">curious</a>.</span>
     
-    CuriousClient
-    </h2>
+        <h2>
+            <span class="ancestors"><a href="module-curious.html">curious</a>.</span>
+        
+        CuriousClient
+        </h2>
+        
     
-</header>  
+</header>
 
 <article>
     <div class="container-overview">
     
-    
-    
         
-<dt>
-    <h4 class="name" id="CuriousClient"><span class="type-signature"></span>new CuriousClient<span class="signature">(curiousURL, request, clientDefaultArgs, quiet, camelCase)</span><span class="type-signature"> &rarr; {Object}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Tool for making a curious query and returning parsed objects.
-    </div>
-    
 
     
+
+    <h4 class="name" id="CuriousClient"><span class="type-signature"></span>new CuriousClient<span class="signature">(curiousURL, request, clientDefaultArgs, quiet<span class="signature-attributes">nullable</span>, camelCase<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
     
+
+
+
+<div class="description">
+    Tool for making a curious query and returning parsed objects
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>curiousURL</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -96,29 +100,29 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">The URL of the Curious server</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>request</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -127,21 +131,21 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last"><p>A function that makes a <code>POST</code> request and returns a promise
-  (a thenable). Examples are <code>jQuery.post</code>,
+
+            <td class="description last"><p>A function that makes a <code>POST</code> request and returns a Promise
+  (a thenable)--examples are <code>jQuery.post</code>,
   <code>axios.post</code>, and Angular's <code>$http.post</code>.</p>
 
   <p>Any function that meets the signature, makes a <code>POST</code> request and
@@ -150,14 +154,14 @@
   response in an object, and so require wrapper functions to be used.
   See <a href="module-curious.CuriousClient.wrappers.html">module:curious.CuriousClient.wrappers</a> for the wrappers.</p></td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>clientDefaultArgs</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -166,31 +170,31 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">Default parameters to send to the serever with every query performed by
-  this client; see module:curious.CuriousClient#performQuery for an
+  this client--see module:curious.CuriousClient#performQuery for an
   explanation of what each parameter means.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>quiet</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -199,31 +203,31 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">Unless true, log every query to the console.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>camelCase</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -232,173 +236,187 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">If true, construct camel-cased versions of the JSON objects returned
   by the Curious server.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1196">line 1196</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1243">line 1243</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
-    A client object with a single performQuery method.
+    A client object with a single performQuery method
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Object</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
-    
-</dd>
+
+
 
     
     </div>
+
     
+
     
+
     
-    
-    
-    
-    
-    
-    
+
+     
+
     
         <h3 class="subsection-title">Namespaces</h3>
-        
+
         <dl>
-            <dt><a href="namespaces.html#module:curious.CuriousClient.wrappers"><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></a></dt>
+            <dt><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></dt>
             <dd></dd>
         </dl>
     
-    
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="performQuery"><span class="type-signature">&lt;static> </span>performQuery<span class="signature">(q, relationships, constructors, params, existingObjects)</span><span class="type-signature"> &rarr; {Promise.&lt;{objects: Array, trees: Array}>}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Perform a Curious query and return back parsed objects.
-    </div>
+
     
 
     
-    
-    
-    
-    
-        <h5>Parameters:</h5>
+        <h3 class="subsection-title">Methods</h3>
+
         
+            
+
+    
+
+    <h4 class="name" id=".performQuery"><span class="type-signature">(static) </span>performQuery<span class="signature">(q, relationships, constructors, params, existingObjects)</span><span class="type-signature"> &rarr; {Promise.&lt;{objects: Array, trees: Array}>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Perform a Curious query and return back parsed objects.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>q</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -407,44 +425,44 @@
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The query string.</td>
+
+            <td class="description last">The query string</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>relationships</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">string[]</span>
+<span class="param-type">Array.&lt;string></span>
 
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The names of relationships between each joined set of objects.</td>
+
+            <td class="description last">The names of relationships between each joined set of objects</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>constructors</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -453,22 +471,22 @@
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">An array of constructors for any custom classes, or null for the
-  default.</td>
+  default</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>params</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -477,42 +495,42 @@
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">Query-specific parameters for the request
                 <h6>Properties</h6>
                 
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>x</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -521,31 +539,31 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">Whether or not to ignore excludes; defaults to false</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>c</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -554,32 +572,32 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">Whether or not to just do a check of the query syntax; defaults to
   false</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>d</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -588,32 +606,32 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">Whether or not return the object data, or just return ids; always
   forced to be true for the JavaScript client</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>fk</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -622,34 +640,34 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">Whether or not follow foreign keys: if false, foregin keys will be
   IDs, as expecte. If true, foreign keys will be 4-member arrays
   that include the ID, name, and URL of the object being pointed to.
   Defaults to false.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>r</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -658,32 +676,32 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">If true, force a refresh of the data not from cache; defaults to
   false.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>fc</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -692,31 +710,31 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">If true, force using the cached data; defaults to false.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>app</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -725,37 +743,38 @@
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
                     &lt;optional><br>
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">If provided, the name of the app, to use for cache key construction.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
+
             </td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>existingObjects</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -764,101 +783,112 @@
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">Objects that already exist to be linked into the results returned by
-  this query.</td>
+  this query</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1241">line 1241</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1288">line 1288</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     A promise that resolves to an object containing the parsed objects
-  from the query, and a tree structure that relates IDs for recursive
-  queries.
+  from the query and a tree structure that relates IDs for recursive
+  queries
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Promise.&lt;{objects: Array, trees: Array}></span>
 
 
-	</dd>
+    </dd>
 </dl>
+
+    
+
+
 
         
     
-    
-</dd>
 
-        </dl>
     
-    
-    
-    
+
     
 </article>
 
-</section>  
+</section>
 
 
 
@@ -866,13 +896,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Jul 02 2016 00:37:08 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Sep 20 2016 14:29:30 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

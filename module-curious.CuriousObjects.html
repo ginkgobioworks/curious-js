@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>JSDoc: Namespace: CuriousObjects</title>
-    
+
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
@@ -16,346 +16,385 @@
 <body>
 
 <div id="main">
-    
+
     <h1 class="page-title">Namespace: CuriousObjects</h1>
+
     
-    
+
 
 
 
 <section>
-    
+
 <header>
-    <h2>
-        <span class="ancestors"><a href="module-curious.html">curious</a>.</span>
     
-    CuriousObjects
-    </h2>
+        <h2>
+            <span class="ancestors"><a href="module-curious.html">curious</a>.</span>
+        
+        CuriousObjects
+        </h2>
+        
     
-</header>  
+</header>
 
 <article>
     <div class="container-overview">
     
-    
-    
         
             <div class="description">Utilities for dealing with curious objects</div>
         
+
         
-        
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
         <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line619">line 619</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-        
+
         
     
     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="groupObjectsByID"><span class="type-signature">&lt;static> </span>groupObjectsByID<span class="signature">(arrayOfObjects)</span><span class="type-signature"> &rarr; {Array}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Take an array of objects that have 'id' fields, and group them into a
-single object using that field.
-    </div>
+
     
 
     
+
     
+
+     
+
     
+
     
+
     
-        <h5>Parameters:</h5>
+        <h3 class="subsection-title">Methods</h3>
+
         
+            
+
+    
+
+    <h4 class="name" id=".groupObjectsByID"><span class="type-signature">(static) </span>groupObjectsByID<span class="signature">(arrayOfObjects)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Take an array of objects that have 'id' fields, and group them into a
+single object using that field.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>arrayOfObjects</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">Object[]</span>
+<span class="param-type">Array.&lt;Object></span>
 
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">The array to turn into an object</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line912">line 912</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line958">line 958</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
-    The values of the object, whatever it holds.
+    The values of the object, whatever it holds
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="idList"><span class="type-signature">&lt;static> </span>idList<span class="signature">(objects)</span><span class="type-signature"> &rarr; {number[]}</span></h4>
+
     
+
+    <h4 class="name" id=".idList"><span class="type-signature">(static) </span>idList<span class="signature">(objects)</span><span class="type-signature"> &rarr; {Array.&lt;number>}</span></h4>
+
     
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Take an array of objects that have <code>id</code> fields and pull
+
+
+
+<div class="description">
+    <p>Take an array of objects that have <code>id</code> fields and pull
 those fields out into a list of only one ID each.</p>
 
 <p>Preserves order.</p>
-    </div>
-    
+</div>
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>objects</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">Object[]</span>
+<span class="param-type">Array.&lt;Object></span>
 
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">An array of objects with the <code>id</code> property</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line939">line 939</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line985">line 985</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     The set of IDs, with duplicates removed, in the same order as the
   input object list
@@ -364,214 +403,230 @@ those fields out into a list of only one ID each.</p>
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
-<span class="param-type">number[]</span>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array.&lt;number></span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="idString"><span class="type-signature">&lt;static> </span>idString<span class="signature">(arrayOfObjects)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
     
+
+    <h4 class="name" id=".idString"><span class="type-signature">(static) </span>idString<span class="signature">(arrayOfObjects)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
     
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        <p>Take an array of objects that have <code>id</code> fields and pull
+
+
+
+<div class="description">
+    <p>Take an array of objects that have <code>id</code> fields and pull
 those fields out into a comma-separated string.</p>
 
 <p>Preserves order.</p>
-    </div>
-    
+</div>
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>arrayOfObjects</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">Object[]</span>
+<span class="param-type">Array.&lt;Object></span>
 
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">The array to turn into an object</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line972">line 972</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1018">line 1018</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     A comma-separated string containing the objects' IDs,
                  with duplicates removed, in the same order as the input
-                 object list.
+                 object list
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">string</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="makeCamelCase"><span class="type-signature">&lt;static> </span>makeCamelCase<span class="signature">(input)</span><span class="type-signature"> &rarr; {string}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Camel case a string with - or _ separators:
-    </div>
-    
 
     
+
+    <h4 class="name" id=".makeCamelCase"><span class="type-signature">(static) </span>makeCamelCase<span class="signature">(input)</span><span class="type-signature"> &rarr; {string}</span></h4>
+
     
+
+
+
+<div class="description">
+    Camel case a string with - or _ separators:
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>input</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -580,211 +635,225 @@ those fields out into a comma-separated string.</p>
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The string to camel-case.</td>
+
+            <td class="description last">The string to camel-case</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line990">line 990</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1036">line 1036</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
-    The input, camel-cased.
+    The input, camel-cased
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">string</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
+
+
+    <h5>Example</h5>
     
-        <h5>Example</h5>
-        
     <pre class="prettyprint"><code>CuriousObjects.makeCamelCase('this_is-someTHING') === 'thisIsSomething'
 CuriousObjects.makeCamelCase('_alreadyDone') === '_alreadyDone'</code></pre>
 
-    
-</dd>
+
 
         
             
-<dt>
-    <h4 class="name" id="parse"><span class="type-signature">&lt;static> </span>parse<span class="signature">(relationships, customConstructors, queryJSONResponse, existingObjects, camelCase)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
     
+
+    <h4 class="name" id=".parse"><span class="type-signature">(static) </span>parse<span class="signature">(relationships, customConstructors, queryJSONResponse, existingObjects, camelCase<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+
     
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Get objects associated with each subquery. For each subquery, build a
+
+
+
+<div class="description">
+    Get objects associated with each subquery. For each subquery, build a
 hash of ID to object.
 
 If existing objects are specified, will build relationships using the
 existing objects.
-    </div>
-    
+</div>
 
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>relationships</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">string[]</span>
+<span class="param-type">Array.&lt;string></span>
 
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">The names of the relationships objects will have to one another.</td>
+
+            <td class="description last">The names of the relationships objects will have to one another</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>customConstructors</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">function[]</span>
+<span class="param-type">Array.&lt;function()></span>
 
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">The custom constructors for curious object classes.</td>
+
+            <td class="description last">The custom constructors for curious object classes</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>queryJSONResponse</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -793,49 +862,49 @@ existing objects.
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">An object of fields holding the query response, as returned and parsed
-  directly from JSON without any post-processing.
+  directly from JSON without any post-processing
                 <h6>Properties</h6>
                 
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>computed_on</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -844,21 +913,21 @@ existing objects.
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The query timestamp.</td>
+
+            <td class="description last">The query timestamp</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>last_model</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -867,45 +936,64 @@ existing objects.
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The model name of the last set of objects returned.</td>
+
+            <td class="description last">The model name of the last set of objects returned</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>results</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">Object[]</span>
+<span class="param-type">Array.&lt;Object></span>
 
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">An array of objects containing Django object ids and other
-  meta-information about the query; one element per model.</td>
-        </tr>
-	
-	
-	
+  meta-information about the query; one element per model
+                <h6>Properties</h6>
+                
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
-                <td class="name"><code>results[].model</code></td>
+                <td class="name"><code>model</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -914,21 +1002,21 @@ existing objects.
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The model name for this part of the query.</td>
+
+            <td class="description last">The model name for this part of the query</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
-                <td class="name"><code>results[].join_index</code></td>
+                <td class="name"><code>join_index</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -937,75 +1025,83 @@ existing objects.
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The index of the model this model joins to.</td>
+
+            <td class="description last">The index of the model this model joins to</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
-                <td class="name"><code>results[].objects</code></td>
+                <td class="name"><code>objects</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">Array[]</span>
+<span class="param-type">Array.&lt;Array></span>
 
 
             
             </td>
+
             
+
             
-            
-            
-            
+
             <td class="description last">The IDs of the objects returned by the query</td>
         </tr>
-	
-	
-	
+
+    
+    </tbody>
+</table>
+
+            </td>
+        </tr>
+
+    
+
         <tr>
             
                 <td class="name"><code>data</code></td>
             
-            
+
             <td class="type">
             
                 
-<span class="param-type">Object[]</span>
+<span class="param-type">Array.&lt;Object></span>
 
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">An array of objects containing the other fields of the Django objects,
-  more than just the IDs. See _parseObjects for a description of this
-  data in the queryData parameter.</td>
+
+            <td class="description last">An array of objects containing the other fields of the Django objects, more than just the
+  IDs--see module:curious.CuriousObjects~_parseObjects for a description of this data
+  in the queryData parameter.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
+
             </td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>existingObjects</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -1014,30 +1110,30 @@ existing objects.
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">The existing objects. Each object in the array is a mapping of an id
+
+            <td class="description last">The existing objects--each object in the array is a mapping of an id
   to its corresponding object.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>camelCase</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -1046,150 +1142,164 @@ existing objects.
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
+
             <td class="description last">If true, construct camel-cased versions of the JSON objects returned
   by the Curious server.</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line777">line 777</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line823">line 823</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
-    The parsed objects. <code>trees</code> holds any hierarchical
+    The parsed objects--<code>trees</code> holds any hierarchical
   relationships, for recursive queries.
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Object</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
-    
-</dd>
+
+
 
         
             
-<dt>
-    <h4 class="name" id="values"><span class="type-signature">&lt;static> </span>values<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Array}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Utility for pulling out all the values contained in an object, in
-the same order as its keys would come out.
-    </div>
-    
 
     
+
+    <h4 class="name" id=".values"><span class="type-signature">(static) </span>values<span class="signature">(obj)</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
     
+
+
+
+<div class="description">
+    Utility for pulling out all the values contained in an object, in
+the same order as its keys would come out
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>obj</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -1198,98 +1308,109 @@ the same order as its keys would come out.
 
             
             </td>
+
             
+
             
-            
-            
-            
-            <td class="description last">The object to look at.</td>
+
+            <td class="description last">The object to look at</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line898">line 898</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line944">line 944</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
-    The values of the object, whatever it holds.
+    The values of the object, whatever it holds
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">Array</span>
 
 
-	</dd>
+    </dd>
 </dl>
+
+    
+
+
 
         
     
-    
-</dd>
 
-        </dl>
     
-    
-    
-    
+
     
 </article>
 
-</section>  
+</section>
 
 
 
@@ -1297,13 +1418,13 @@ the same order as its keys would come out.
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Jul 02 2016 00:37:09 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Sep 20 2016 14:29:30 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

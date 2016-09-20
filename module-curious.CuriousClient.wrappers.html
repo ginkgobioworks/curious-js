@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>JSDoc: Namespace: wrappers</title>
-    
+
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
     <!--[if lt IE 9]>
@@ -16,141 +16,159 @@
 <body>
 
 <div id="main">
-    
+
     <h1 class="page-title">Namespace: wrappers</h1>
+
     
-    
+
 
 
 
 <section>
-    
+
 <header>
-    <h2>
-        <span class="ancestors"><a href="module-curious.html">curious</a><a href="module-curious.CuriousClient.html">.CuriousClient</a>.</span>
     
-    wrappers
-    </h2>
+        <h2>
+            <span class="ancestors"><a href="module-curious.html">curious</a><a href="module-curious.CuriousClient.html">.CuriousClient</a>.</span>
+        
+        wrappers
+        </h2>
+        
     
-</header>  
+</header>
 
 <article>
     <div class="container-overview">
-    
-    
     
         
             <div class="description">Convenience functions for interfacing with a variety of common HTTP/ajax
 client libraries.
 
-Note that jQuery.post does not need a wrapper.</div>
+NOTE: None of these client libraries are required by this module—the wrappers are here simply
+to help CuriousCient interact with code that uses those libraries.
+
+NOTE: <code>jQuery.post</code> does not need a wrapper--it, and any other functions that
+work like it and resolve to the same kind of data structure can be passed directly as the
+<code>request</code> parameter.</div>
         
+
         
-        
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1340">line 1340</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1387">line 1387</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-        
+
         
     
     </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-        <h3 class="subsection-title">Methods</h3>
-        
-        <dl>
-            
-<dt>
-    <h4 class="name" id="CuriousClient.wrappers.angular"><span class="type-signature">&lt;static> </span>CuriousClient.wrappers.angular<span class="signature">(angularHttpServiceOrPostFunction, options)</span><span class="type-signature"> &rarr; {function}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Convenience function to make it easier to interact with angular responses:
-angular is not required by this module at all.
-    </div>
+
     
 
     
+
     
+
+     
+
     
+
     
+
     
-        <h5>Parameters:</h5>
+        <h3 class="subsection-title">Methods</h3>
+
         
+            
+
+    
+
+    <h4 class="name" id=".CuriousClient.wrappers.angular"><span class="type-signature">(static) </span>CuriousClient.wrappers.angular<span class="signature">(angularHttpServiceOrPostFunction<span class="signature-attributes">nullable</span>, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Convenience function to make it easier to interact with AngularJS <code>$http.post</code>
+responses (AngularJS is not required by this module at all.)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>angularHttpServiceOrPostFunction</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -159,32 +177,32 @@ angular is not required by this module at all.
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">Either the Angular <code>$http</code> service object, or <code>$http.post</code>.
-  Defaults to using whatever <code>$http</code> resolves to.</td>
+
+            <td class="description last">Either the Angular <code>$http</code> service object, or <code>$http.post</code>--defaults
+  to using whatever <code>$http</code> resolves to.</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>options</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -193,158 +211,172 @@ angular is not required by this module at all.
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">Additional options to send to the requesting function.</td>
+
+            <td class="description last">Additional options to send to the requesting function</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1396">line 1396</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1448">line 1448</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     A function that meets the requirements to make requests in the curious client:
  takes the url and arguments, makes a <code>POST</code> request and returns
- a promise that resolves directly to the returned query response (unwrapped).
+ a promise that resolves directly to the returned query response (unwrapped)
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">function</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
+
+
+    <h5>Example</h5>
     
-        <h5>Example</h5>
-        
     <pre class="prettyprint"><code>var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.angular() ...)
 var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.angular($http) ...)</code></pre>
 
-    
-</dd>
+
 
         
             
-<dt>
-    <h4 class="name" id="CuriousClient.wrappers.axios"><span class="type-signature">&lt;static> </span>CuriousClient.wrappers.axios<span class="signature">(axiosModuleOrFunction, options)</span><span class="type-signature"> &rarr; {function}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Convenience function to make it easier to interact with axios responses:
-axios is not required by this module at all.
-    </div>
-    
 
     
+
+    <h4 class="name" id=".CuriousClient.wrappers.axios"><span class="type-signature">(static) </span>CuriousClient.wrappers.axios<span class="signature">(axiosModuleOrFunction<span class="signature-attributes">nullable</span>, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
     
+
+
+
+<div class="description">
+    Convenience function to make it easier to interact with axios responses
+(axios is not required by this module at all.)
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>axiosModuleOrFunction</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -353,32 +385,32 @@ axios is not required by this module at all.
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">Either the <code>axios</code> module itself, or <code>axios.post</code>.
-  Defaults to using whatever <code>axios</code> resolves to.</td>
+
+            <td class="description last">Either the <code>axios</code> module itself, or <code>axios.post</code>--defaults to using
+  whatever <code>axios</code> resolves to</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>options</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -387,76 +419,88 @@ axios is not required by this module at all.
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">Additional options to send to the requesting function.</td>
+
+            <td class="description last">Additional options to send to the requesting function</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1372">line 1372</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1424">line 1424</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     A function that meets the requirements to make requests in the curious client:
  takes the url and arguments, makes an axios post request, and returns
@@ -466,79 +510,81 @@ axios is not required by this module at all.
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">function</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
+
+
+    <h5>Example</h5>
     
-        <h5>Example</h5>
-        
     <pre class="prettyprint"><code>var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios() ...)
 var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) ...)</code></pre>
 
-    
-</dd>
+
 
         
             
-<dt>
-    <h4 class="name" id="CuriousClient.wrappers.ironAjax"><span class="type-signature">&lt;static> </span>CuriousClient.wrappers.ironAjax<span class="signature">(ironAjaxElement, options)</span><span class="type-signature"> &rarr; {function}</span></h4>
-    
-    
-</dt>
-<dd>
-    
-    
-    <div class="description">
-        Convenience function to make it easier to interact with Polymer's
-<code>&lt;iron-ajax&gt;</code> element.
-    </div>
-    
 
     
+
+    <h4 class="name" id=".CuriousClient.wrappers.ironAjax"><span class="type-signature">(static) </span>CuriousClient.wrappers.ironAjax<span class="signature">(ironAjaxElement, options<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {function}</span></h4>
+
     
+
+
+
+<div class="description">
+    Convenience function to make it easier to interact with Polymer's
+<code>&lt;iron-ajax&gt;</code> element.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
     
-    
-    
-        <h5>Parameters:</h5>
-        
 
 <table class="params">
     <thead>
-	<tr>
-		
-		<th>Name</th>
-		
-		
-		<th>Type</th>
-		
-		
-		<th>Argument</th>
-		
-		
-		
-		
-		<th class="last">Description</th>
-	</tr>
-	</thead>
-	
-	<tbody>
-	
-	
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
         <tr>
             
                 <td class="name"><code>ironAjaxElement</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -547,29 +593,29 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">The <code>iron-ajax</code> element being used to make the request.</td>
+
+            <td class="description last">The <code>iron-ajax</code> element being used to make the request</td>
         </tr>
-	
-	
-	
+
+    
+
         <tr>
             
                 <td class="name"><code>options</code></td>
             
-            
+
             <td class="type">
             
                 
@@ -578,116 +624,127 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
 
             
             </td>
-            
+
             
                 <td class="attributes">
                 
-                    
+
                 
                     &lt;nullable><br>
                 
-                    
+
                 
                 </td>
             
+
             
-            
-            
-            <td class="description last">Additional options to send to the requesting function.</td>
+
+            <td class="description last">Additional options to send to the requesting function</td>
         </tr>
-	
-	
-	</tbody>
+
+    
+    </tbody>
 </table>
-    
-    
-    
+
+
+
+
+
+
 <dl class="details">
-    
-        
-    
-    
+
     
 
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
+
     
-    
+
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1418">line 1418</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1470">line 1470</a>
     </li></ul></dd>
     
+
     
+
     
-    
-    
-    
+
     
 </dl>
 
-    
-    
 
-    
 
-    
-    
-    
-    
-    
-    <h5>Returns:</h5>
-    
-            
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
 <div class="param-desc">
     A function that meets the requirements to make requests in the curious client:
  takes the url and arguments, makes a <code>POST</code> request with
  <code>ironAjaxElement</code>, and returns a promise that resolves
- directly to the returned query response (unwrapped).
+ directly to the returned query response (unwrapped)
 </div>
 
 
 
 <dl>
-	<dt>
-		Type
-	</dt>
-	<dd>
-		
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
 <span class="param-type">function</span>
 
 
-	</dd>
+    </dd>
 </dl>
 
-        
     
+
+
+    <h5>Example</h5>
     
-        <h5>Example</h5>
-        
     <pre class="prettyprint"><code>var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.ironAjax(this.$.xhr) ...)</code></pre>
 
-    
-</dd>
 
-        </dl>
+
+        
     
+
     
-    
-    
+
     
 </article>
 
-</section>  
+</section>
 
 
 
@@ -695,13 +752,13 @@ var client = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios) 
 </div>
 
 <nav>
-    <h2><a href="index.html">Index</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
-<br clear="both">
+<br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.2.2</a> on Sat Jul 02 2016 00:37:09 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Sep 20 2016 14:29:30 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
