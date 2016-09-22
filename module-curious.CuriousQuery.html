@@ -297,21 +297,21 @@ to the construtor, or by calling <code>.start()</code>.</p>
     <h5>Examples</h5>
     
     <pre class="prettyprint"><code>// Explicitly set start, wrapWith classes
-  var q = (new curious.CuriousQuery())
-    .start('Experiment(id=302)', 'experiment')
-    .follow('Experiment.reaction_set', 'reactions')
-    .follow('Reaction.dataset_set', 'dataset').wrapWith(Dataset)
-    .follow('Dataset.attachment_set');
+var q = (new curious.CuriousQuery())
+  .start('Experiment(id=302)', 'experiment')
+  .follow('Experiment.reaction_set', 'reactions')
+  .follow('Reaction.dataset_set', 'dataset').wrapWith(Dataset)
+  .follow('Dataset.attachment_set');
 
- q.query() ==
-   'Experiment(id=302), Experiment.reaction_set, '
-   + 'Reaction.dataset_set, Dataset.attachment_set'</code></pre>
+q.query() ==
+  'Experiment(id=302), Experiment.reaction_set, '
+  + 'Reaction.dataset_set, Dataset.attachment_set'</code></pre>
 
     <pre class="prettyprint"><code>// Terser version of the same query above
-  var q = new curious.CuriousQuery('Experiment(id=302)', 'experiment')
-    .follow('Experiment.reaction_set', 'reactions')
-    .follow('Reaction.dataset_set', 'dataset', Dataset)
-    .follow('Dataset.attachment_set');</code></pre>
+var q = new curious.CuriousQuery('Experiment(id=302)', 'experiment')
+  .follow('Experiment.reaction_set', 'reactions')
+  .follow('Reaction.dataset_set', 'dataset', Dataset)
+  .follow('Dataset.attachment_set');</code></pre>
 
 
 
@@ -329,9 +329,294 @@ to the construtor, or by calling <code>.start()</code>.</p>
     
 
     
+        <h3 class="subsection-title">Members</h3>
+
+        
+            
+<h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Convert this object to a string, returning the complete query string
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line290">line 290</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="valueOf"><span class="type-signature"></span>valueOf<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Convert this probject to its native value equivalent, returning the complete query string
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line297">line 297</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+    
 
     
         <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    <h4 class="name" id="catch"><span class="type-signature"></span>catch<span class="signature">(rejected)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Add a callback to be called if the promise to perform the query is rejected.
+
+This can be useful for constructing a query object with known error-handling before
+actually executing it.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>rejected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">A function to call when the promise is rejected (just like you would pass to
+  Promise.prototype.catch)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line688">line 688</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The query itself, to allow chaining <code>then</code>s <code>catch</code>es, or any other methods
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">CuriousQuery</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
 
         
             
@@ -389,7 +674,7 @@ to the construtor, or by calling <code>.start()</code>.</p>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line311">line 311</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line357">line 357</a>
     </li></ul></dd>
     
 
@@ -545,7 +830,7 @@ by the other query chain's terms.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line290">line 290</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line336">line 336</a>
     </li></ul></dd>
     
 
@@ -598,7 +883,7 @@ by the other query chain's terms.
 
     
 
-    <h4 class="name" id="follow"><span class="type-signature"></span>follow<span class="signature">(termString, relationship, customConstructor)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
+    <h4 class="name" id="follow"><span class="type-signature"></span>follow<span class="signature">(termString, relationship, customConstructor<span class="signature-attributes">opt, nullable</span>)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
 
     
 
@@ -629,6 +914,8 @@ by the other query chain's terms.
         <th>Type</th>
 
         
+        <th>Attributes</th>
+        
 
         
 
@@ -654,6 +941,14 @@ by the other query chain's terms.
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -677,6 +972,14 @@ by the other query chain's terms.
             </td>
 
             
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
 
             
 
@@ -699,6 +1002,18 @@ by the other query chain's terms.
             
             </td>
 
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+                    &lt;nullable><br>
+                
+
+                
+                </td>
             
 
             
@@ -744,7 +1059,7 @@ by the other query chain's terms.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line439">line 439</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line485">line 485</a>
     </li></ul></dd>
     
 
@@ -897,7 +1212,7 @@ by the other query chain's terms.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line451">line 451</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line497">line 497</a>
     </li></ul></dd>
     
 
@@ -1050,7 +1365,7 @@ by the other query chain's terms.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line463">line 463</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line509">line 509</a>
     </li></ul></dd>
     
 
@@ -1103,16 +1418,14 @@ by the other query chain's terms.
 
     
 
-    <h4 class="name" id="perform"><span class="type-signature"></span>perform<span class="signature">(curiousClient)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
+    <h4 class="name" id="perform"><span class="type-signature"></span>perform<span class="signature">(curiousClient<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Promise}</span></h4>
 
     
 
 
 
 <div class="description">
-    Perform the query using a passed-in Curious client, such as jQuery's ajax,
-or any other client that has an asynchronous <code>POST</code> request
-methods.
+    Perform the query using a passed-in CuriousClient object.
 </div>
 
 
@@ -1205,7 +1518,7 @@ methods.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line582">line 582</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line626">line 626</a>
     </li></ul></dd>
     
 
@@ -1309,7 +1622,7 @@ methods.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line247">line 247</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line250">line 250</a>
     </li></ul></dd>
     
 
@@ -1463,7 +1776,7 @@ objects into.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line556">line 556</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line602">line 602</a>
     </li></ul></dd>
     
 
@@ -1517,7 +1830,7 @@ objects into.
 
     
 
-    <h4 class="name" id="setParams"><span class="type-signature"></span>setParams<span class="signature">(params)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
+    <h4 class="name" id="setParams"><span class="type-signature"></span>setParams<span class="signature">(params<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
 
     
 
@@ -1620,7 +1933,7 @@ perform is called.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line532">line 532</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line578">line 578</a>
     </li></ul></dd>
     
 
@@ -1673,7 +1986,7 @@ perform is called.
 
     
 
-    <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">(termString, relationship, customConstructor<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
+    <h4 class="name" id="start"><span class="type-signature"></span>start<span class="signature">(termString, relationship, customConstructor<span class="signature-attributes">opt, nullable</span>)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
 
     
 
@@ -1800,6 +2113,8 @@ directly to the constructor.
                 
 
                 
+                    &lt;nullable><br>
+                
 
                 
                 </td>
@@ -1849,7 +2164,7 @@ directly to the constructor.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line423">line 423</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line469">line 469</a>
     </li></ul></dd>
     
 
@@ -1888,6 +2203,311 @@ directly to the constructor.
     <dd>
         
 <span class="param-type">CuriousQuery</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="then"><span class="type-signature"></span>then<span class="signature">(fulfilled, rejected<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {CuriousQuery}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Add a (pair of) callback(s) to be called when the promise to perform the query resolves.
+
+This can be useful for constructing a query object with known post-processing before
+actually executing it.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>fulfilled</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A function to call when the promise is fulfilled (just like you would pass to
+  Promise.prototype.then)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>rejected</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+
+            <td class="description last">A function to call when the promise is rejected (just like you would pass as the
+  second argument to Promise.prototype.then)</td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line669">line 669</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The query itself, to allow chaining <code>then</code>s, or any other methods
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">CuriousQuery</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="toJSON"><span class="type-signature"></span>toJSON<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Convert this probject to a plain JavaScript object to allow it to be serialized.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line304">line 304</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+<div class="param-desc">
+    The fully constructed query
+</div>
+
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
 
 
     </dd>
@@ -2077,7 +2697,7 @@ directly to the constructor.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line480">line 480</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line526">line 526</a>
     </li></ul></dd>
     
 
@@ -2233,7 +2853,7 @@ with factory functions that explicitly return an object.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line510">line 510</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line556">line 556</a>
     </li></ul></dd>
     
 
@@ -2387,7 +3007,7 @@ with factory functions that explicitly return an object.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line494">line 494</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line540">line 540</a>
     </li></ul></dd>
     
 
@@ -2451,13 +3071,13 @@ with factory functions that explicitly return an object.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Sep 20 2016 14:29:30 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Sep 22 2016 19:54:32 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -50,17 +50,175 @@ and <code>CuriousQuery</code>.</p>
 server. You are responsible for picking and using a request method that works
 for you. <code>CuriousClient</code> provides some convenience wrappers, but you can make
 any asynchronous transport layer work.</p>
-<pre class="prettyprint source lang-javascript"><code>var curiousClient = new CuriousClient(CURIOUS_URL, CuriousClient.wrappers.axios(axios), ...);</code></pre><p>Then, construct a <code>CuriousQuery</code> and perform it on the server using the client.
+<pre class="prettyprint source lang-javascript"><code>var curiousClient = new curious.CuriousClient(CURIOUS_URL, curious.CuriousClient.wrappers.axios(axios), ...);</code></pre><p>Then, construct a <code>CuriousQuery</code> and perform it on the server using the client.
 Attach any callbacks to the Promise object returned by the <code>perform</code> method. The
-results of the query will be passed to the callback:</p>
-<pre class="prettyprint source lang-javascript"><code>var q = new curious.CuriousQuery('Experiment(id=302)', 'experiment')
-  .follow('Experiment.reaction_set', 'reactions')
-  .follow('Reaction.dataset_set', 'dataset', Dataset)
-  .follow('Dataset.attachment_set');
+results of the query will be passed to the callback.</p>
+<p>Here's a trivial example. The results, of course, depend on the schema on the curious server.</p>
+<pre class="prettyprint source lang-javascript"><code>// A simple node.js use case; works similarly on the front end, minus module loading
 
-q.perform(curiousClient).then(function (queriedData) {
-  // Do stuff with queriedData
-});</code></pre><p>The detailed API is explained in the documentation.</p></article>
+const util = require('util');
+const axios = require('axios');
+const curious = require('curious');
+
+// Define a client to connect to a curious server
+const client = new curious.CuriousClient(
+ 'http://your-curious.com',
+  curious.CuriousClient.wrappers.axios(axios),
+  null, // serverArgs
+  true, // quiet
+  true  // camelCase
+);
+
+// The schema here is a simple 1:many relationship
+
+// Make a query
+const q = new curious.CuriousQuery('Document(id=12345)', 'documents')
+  .follow('Document.section_set', 'sections');
+
+// Perform that query with the client
+q.perform(client).then((data) => {
+
+  // In the callback, examine the resulting data
+  try {
+    console.log('data:');
+    console.log(data);
+
+    console.log('data.objects:');
+    console.log(data.objects);
+
+    console.log('data.objects.documents:');
+    console.log(data.objects.documents);
+
+    console.log('data.objects.documents[0].sections:');
+    console.log(data.objects.documents[0].sections);
+
+    console.log('data.objects.documents[0].sections[0].documents[0]:');
+    console.log(data.objects.documents[0].sections[0].documents[0]);
+
+    console.log('data.objects.sections:');
+    console.log(data.objects.sections);
+
+    console.log('data.objects.sections[0].documents:');
+    console.log(data.objects.sections[0].documents);
+
+    console.log('data.objects.sections[0].documents[0].sections[0]:');
+    console.log(data.objects.sections[0].documents[0].sections[0]);
+  } catch (e) {
+    console.error(e);
+  }
+}, console.error);</code></pre><p>The output from this example would look something like this, depending on the schema:</p>
+<pre class="prettyprint source lang-javascript"><code>data:
+{ objects: { documents: [ [Object] ], sections: [ [Object], [Object] ] },
+  trees: [ null, null ] }
+
+data.objects:
+{ documents:
+   [ CuriousObject {
+       __url: 'http://your-curious.com/document/12345',
+       __model: 'Document',
+       id: 12345,
+       ...
+       sections: [Object] } ],
+  sections:
+   [ CuriousObject {
+       __url: null,
+       __model: 'Section',
+       id: 12205,
+       documentId: 12345,
+       ...
+       documents: [Object] },
+     CuriousObject {
+       __url: null,
+       __model: 'Section',
+       id: 112403,
+       documentId: 12345,
+       ...
+       documents: [Object] } ] }
+
+data.objects.documents:
+[ CuriousObject {
+    __url: 'http://your-curious.com/document/12345',
+    __model: 'Document',
+    id: 12345,
+    ...
+    sections: [ [Object], [Object] ] } ]
+
+data.objects.documents[0].sections:
+[ CuriousObject {
+    __url: null,
+    __model: 'Section',
+    id: 12205,
+    documentId: 12345,
+    ...
+    documents: [ [Object] ] },
+  CuriousObject {
+    __url: null,
+    __model: 'Section',
+    id: 112403,
+    documentId: 12345,
+    ...
+    documents: [ [Object] ] } ]
+
+data.objects.documents[0].sections[0].documents[0]:
+CuriousObject {
+  __url: 'http://your-curious.com/document/12345',
+  __model: 'Document',
+  id: 12345,
+  ...
+  sections:
+   [ CuriousObject {
+       __url: null,
+       __model: 'Section',
+       id: 12205,
+       documentId: 12345,
+       ...
+       documents: [Object] },
+     CuriousObject {
+       __url: null,
+       __model: 'Section',
+       id: 112403,
+       documentId: 12345,
+       ...
+       documents: [Object] } ] }
+
+data.objects.sections:
+[ CuriousObject {
+    __url: null,
+    __model: 'Section',
+    id: 12205,
+    documentId: 12345,
+    ...
+    documents: [ [Object] ] },
+  CuriousObject {
+    __url: null,
+    __model: 'Section',
+    id: 112403,
+    documentId: 12345,
+    ...
+    documents: [ [Object] ] } ]
+
+data.objects.sections[0].documents:
+[ CuriousObject {
+    __url: 'http://your-curious.com/document/12345',
+    __model: 'Document',
+    id: 12345,
+    ...
+    sections: [ [Object], [Object] ] } ]
+
+data.objects.sections[0].documents[0].sections[0]:
+CuriousObject {
+  __url: null,
+  __model: 'Section',
+  id: 12205,
+  documentId: 12345,
+  ...
+  documents:
+   [ CuriousObject {
+       __url: 'http://your-curious.com/document/12345',
+       __model: 'Document',
+       id: 12345,
+       ...
+       sections: [Object] } ] }</code></pre><p>The API is explained in detail in  the documentation.</p></article>
     </section>
 
 
@@ -71,13 +229,13 @@ q.perform(curiousClient).then(function (queriedData) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Sep 20 2016 14:29:30 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Sep 22 2016 19:54:31 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

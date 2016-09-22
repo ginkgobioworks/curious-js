@@ -223,33 +223,33 @@
    * @class
    * @alias module:curious.CuriousQuery
    *
-   * @param {string} [initialTermString]
+   * @param {string=} initialTermString
    *   The string for the starting term
-   * @param {string} [initialRelationship]
+   * @param {string=} initialRelationship
    *   The starting term's relationship
-   * @param {function} [initialObjectClass]
+   * @param {function(Object)=} initialObjectClass
    *   A custom object class constructor for the starting term
    *
    * @return {CuriousQuery} The newly constructed object
    *
    * @example
-   *   // Explicitly set start, wrapWith classes
-   *   var q = (new curious.CuriousQuery())
-   *     .start('Experiment(id=302)', 'experiment')
-   *     .follow('Experiment.reaction_set', 'reactions')
-   *     .follow('Reaction.dataset_set', 'dataset').wrapWith(Dataset)
-   *     .follow('Dataset.attachment_set');
+   * // Explicitly set start, wrapWith classes
+   * var q = (new curious.CuriousQuery())
+   *   .start('Experiment(id=302)', 'experiment')
+   *   .follow('Experiment.reaction_set', 'reactions')
+   *   .follow('Reaction.dataset_set', 'dataset').wrapWith(Dataset)
+   *   .follow('Dataset.attachment_set');
    *
-   *  q.query() ==
-   *    'Experiment(id=302), Experiment.reaction_set, '
-   *    + 'Reaction.dataset_set, Dataset.attachment_set'
+   * q.query() ==
+   *   'Experiment(id=302), Experiment.reaction_set, '
+   *   + 'Reaction.dataset_set, Dataset.attachment_set'
    *
    * @example
-   *   // Terser version of the same query above
-   *   var q = new curious.CuriousQuery('Experiment(id=302)', 'experiment')
-   *     .follow('Experiment.reaction_set', 'reactions')
-   *     .follow('Reaction.dataset_set', 'dataset', Dataset)
-   *     .follow('Dataset.attachment_set');
+   * // Terser version of the same query above
+   * var q = new curious.CuriousQuery('Experiment(id=302)', 'experiment')
+   *   .follow('Experiment.reaction_set', 'reactions')
+   *   .follow('Reaction.dataset_set', 'dataset', Dataset)
+   *   .follow('Dataset.attachment_set');
    */
   var CuriousQuery = function (
     initialTermString, initialRelationship, initialObjectClass
@@ -259,6 +259,9 @@
     this.objectFactories = [];
     this.params = null;
     this.existingObjects = null;  // array of object arrays
+
+    // then-style callback pairs to attach to the end of the promise when the query is performed
+    this.thens = [];
 
     if (initialTermString &amp;&amp; initialRelationship) {
       this.start(initialTermString, initialRelationship, initialObjectClass);
@@ -305,6 +308,49 @@
     });
 
     return query;
+  };
+
+  /**
+   * Convert this object to a string, returning the complete query string
+   *
+   * @return {string} The fully constructed query
+   */
+  CuriousQuery.prototype.toString = CuriousQuery.prototype.query;
+
+  /**
+   * Convert this probject to its native value equivalent, returning the complete query string
+   *
+   * @return {string} The fully constructed query
+   */
+  CuriousQuery.prototype.valueOf = CuriousQuery.prototype.query;
+
+  /**
+   * Convert this probject to a plain JavaScript object to allow it to be serialized.
+   *
+   * @return {string} The fully constructed query
+   */
+  CuriousQuery.prototype.toJSON = function () {
+    return {
+      terms: this.terms,
+      relationships: this.relationships,
+      params: this.params,
+
+      // Object Factories can't be serialized directly: they're functions.
+      objectFactories: this.objectFactories.map(function (factory) {
+        return factory ? factory.toString() : null;
+      }),
+
+      // Existing objects are turned into plain objects if possible, or left alone otherwise.
+      existingObjects: this.existingObjects.map(function (objectArray) {
+        return objectArray.map(function (existingObject) {
+          return (
+            existingObject.toJSON
+              ? existingObject.toJSON()
+              : existingObject
+          );
+        });
+      }),
+    };
   };
 
   /**
@@ -362,7 +408,7 @@
    *   array of them
    * @param {string} relationship
    *   The name of this term in inter-term relationships
-   * @param {function} [customConstructor]
+   * @param {?function(Object)=} customConstructor
    *   A custom constructor for the resulting objects, if this part of the
    *   query returns new objects
    *
@@ -442,7 +488,7 @@
    *   The contents of the starting term
    * @param {string} relationship
    *   The name of this term in inter-term relationships
-   * @param {function} [customConstructor]
+   * @param {?function(Object)=} customConstructor
    *   A custom constructor for the resulting objects, if this part of the
    *   query returns new objects
    *
@@ -459,7 +505,7 @@
    *   The contents of the starting term
    * @param {string} relationship
    *   The name of this term in inter-term relationships
-   * @param {function} customConstructor
+   * @param {?function(Object)=} customConstructor
    *   A custom constructor function for the resulting objects
    *
    * @return {CuriousQuery} The query object, with the term appended
@@ -549,7 +595,7 @@
    * Set the parameters that this query will pass to its curious client when
    * perform is called.
    *
-   * @param {Object} params
+   * @param {!Object} params
    *   An object of parameters to set--see
    *   {@link module:curious.CuriousClient#performQuery} for a full description of the
    *   parameters.
@@ -576,7 +622,7 @@
    * Set the existing objects that this query will use to link the returned
    * objects into.
    *
-   * @param {Object[]} objs The existing objects to set
+   * @param {Array&lt;Object>} objs The existing objects to set
    *
    * @return {CuriousQuery} The query object with its existing object set
    *                        updated
@@ -596,11 +642,9 @@
   };
 
   /**
-   * Perform the query using a passed-in Curious client, such as jQuery's ajax,
-   * or any other client that has an asynchronous &lt;code>POST&lt;/code> request
-   * methods.
+   * Perform the query using a passed-in CuriousClient object.
    *
-   * @param {CuriousClient} curiousClient
+   * @param {!CuriousClient} curiousClient
    *   A CuriousClient object that will handle performing the actual query
    *
    * @return {Promise}
@@ -608,11 +652,71 @@
    *
    */
   CuriousQuery.prototype.perform = function (curiousClient) {
+    var promise;
     var q = this.query();
 
-    return curiousClient.performQuery(
+    promise = curiousClient.performQuery(
       q, this.relationships, this.objectFactories, this.params, this.existingObjects
     );
+
+    // Attach any thenable resolve/reject promise callback pairs to the promise that
+    // results from query execution
+    this.thens.forEach(function (thenPair) {
+      // thenPair looks like [resolved, rejected]
+      if (thenPair[0]) {
+        // Just like promise = promise.then(resolved, rejected);
+        promise = promise.then.apply(promise, thenPair);
+      } else if (thenPair.length > 1 &amp;&amp; thenPair[1]) {
+        // If the first callback is null but the second one isn't, we're looking at a catch
+        // situation. We use the same data structure to store both situations, so that they're
+        // attached to the proise in the same order they were attached to the Query object
+        promise = promise.catch(thenPair[1]);
+      }
+    });
+
+    return promise;
+  };
+
+  /**
+   * Add a (pair of) callback(s) to be called when the promise to perform the query resolves.
+   *
+   * This can be useful for constructing a query object with known post-processing before
+   * actually executing it.
+   *
+   * @param {function} fulfilled
+   *   A function to call when the promise is fulfilled (just like you would pass to
+   *   Promise.prototype.then)
+   *
+   * @param {function=} rejected
+   *   A function to call when the promise is rejected (just like you would pass as the
+   *   second argument to Promise.prototype.then)
+   *
+   * @return {CuriousQuery}
+   *   The query itself, to allow chaining &lt;code>then&lt;/code>s, or any other methods
+   */
+  CuriousQuery.prototype.then = function (fulfilled, rejected) {
+    this.thens.push([fulfilled, rejected]);
+
+    return this;
+  };
+
+  /**
+   * Add a callback to be called if the promise to perform the query is rejected.
+   *
+   * This can be useful for constructing a query object with known error-handling before
+   * actually executing it.
+   *
+   * @param {function} rejected
+   *   A function to call when the promise is rejected (just like you would pass to
+   *   Promise.prototype.catch)
+   *
+   * @return {CuriousQuery}
+   *   The query itself, to allow chaining &lt;code>then&lt;/code>s &lt;code>catch&lt;/code>es, or any other methods
+   */
+  CuriousQuery.prototype.catch = function (rejected) {
+    this.thens.push([null, rejected]);
+
+    return this;
   };
 
   /**
@@ -648,13 +752,14 @@
     /**
      * Base (default) class for an object returned from a Curious query
      *
-     * @class CuriousObjects.defaultType
-     * @memberof module:curious.CuriousObjects
+     * @class
+     * @static
+     * @alias module:curious.CuriousObjects.defaultType
      *
      * @param {Object} objectData
      *   A plain JavaScript object representing the query data, as parsed from
      *   the returned JSON
-     * @param {boolean?} camelCase
+     * @param {boolean=} camelCase
      *   If true, construct camel-cased versions the fields in objectData
      */
     function CuriousObject(objectData, camelCase) {
@@ -683,8 +788,6 @@
     /**
      * Serialize CuriousObject instances to JSON effectively if they are passed to JSON.stringify
      *
-     * @memberof module:curious.CuriousObjects.defaultType
-     *
      * @return {Object} A plain JavaScript object containing the CuriousObject's data
      */
     CuriousObject.prototype.toJSON = function () {
@@ -703,9 +806,7 @@
      * When parsing a JSON string into objects, instantiate any objects that look like
      * CuriousObject instances as such, instead of plain JavaScript objects.
      *
-     * @memberof module:curious.CuriousObjects.defaultType
      * @static
-     *
      * @param {string} jsonString A string of JSON-encoded data
      *
      * @return {*} The instantiated JSON-encoded data, with CuriousObjects placed where
@@ -724,7 +825,6 @@
       });
     };
 
-
     /**
      * When a Curious query is performed, the returned data comes in a set of 3
      * arrays to save space: objects, fields, urls. Assemble that data into a
@@ -734,22 +834,22 @@
      * @private
      * @memberof module:curious.CuriousObjects
      *
-     * @param {Object&lt;string,Array>} queryData
+     * @param {Object&lt;string, Array>} queryData
      *   A plain JavaScript object representing the query data, as parsed from
      *   the returned JSON--this format is not meant to be easy to use, but
      *   takes less space.
-     * @param {string[]} queryData.fields
+     * @param {Array&lt;string>} queryData.fields
      *   The fields every object has
-     * @param {Array[]} queryData.objects
+     * @param {Array&lt;Array>} queryData.objects
      *   An array of arrays, where each array is the values of a single object's
      *   properties, in the order specified by &lt;code>queryData.fields&lt;/code>
-     * @param {string[]} queryData.urls
+     * @param {Array&lt;string>} queryData.urls
      *   The url of every object, if they have one
      * @param {string} model
      *   The name of the Django model these objects come from
-     * @param {function?} customConstructor
+     * @param {?function(Object)} customConstructor
      *   A constructor to use instead of the default CuriousObject constructor
-     * @param {boolean?} camelCase
+     * @param {boolean=} camelCase
      *   If true, construct camel-cased versions of the JSON objects returned
      *   by the Curious server.
      *
@@ -813,9 +913,9 @@
      *
      * @memberof module:curious.CuriousObjects
      *
-     * @param {string[]} relationships
+     * @param {Array&lt;string>} relationships
      *   The names of the relationships objects will have to one another
-     * @param {function[]} customConstructors
+     * @param {Array&lt;function(Object)>} customConstructors
      *   The custom constructors for curious object classes
      * @param {Object} queryJSONResponse
      *   An object of fields holding the query response, as returned and parsed
@@ -824,27 +924,27 @@
      *   The query timestamp
      * @param {string} queryJSONResponse.last_model
      *   The model name of the last set of objects returned
-     * @param {Object[]} queryJSONResponse.results
+     * @param {Array&lt;Object>} queryJSONResponse.results
      *   An array of objects containing Django object ids and other
      *   meta-information about the query; one element per model
      * @param {string} queryJSONResponse.results[].model
      *   The model name for this part of the query
      * @param {number} queryJSONResponse.results[].join_index
      *   The index of the model this model joins to
-     * @param {Array[]} queryJSONResponse.results[].objects
+     * @param {Array&lt;Array>} queryJSONResponse.results[].objects
      *   The IDs of the objects returned by the query
-     * @param {Object[]} queryJSONResponse.data
+     * @param {Array&lt;Object>} queryJSONResponse.data
      *   An array of objects containing the other fields of the Django objects, more than just the
      *   IDs--see {@link module:curious.CuriousObjects~_parseObjects} for a description of this data
      *   in the queryData parameter.
-     * @param {Array&lt;Object&lt;number,Object>>} existingObjects
+     * @param {Array&lt;Object&lt;number, Object>>} existingObjects
      *   The existing objects--each object in the array is a mapping of an id
      *   to its corresponding object.
-     * @param {boolean?} camelCase
+     * @param {boolean=} camelCase
      *   If true, construct camel-cased versions of the JSON objects returned
      *   by the Curious server.
      *
-     * @return {{objects: Object[], trees: Object[]}}
+     * @return {{objects: Array&lt;Object>, trees: Array&lt;Object>}}
      *   The parsed objects--&lt;code>trees&lt;/code> holds any hierarchical
      *   relationships, for recursive queries.
      */
@@ -979,7 +1079,7 @@
      *
      * @memberof module:curious.CuriousObjects
      *
-     * @param {Object[]} arrayOfObjects The array to turn into an object
+     * @param {Array&lt;Object>} arrayOfObjects The array to turn into an object
      *
      * @return {Array} The values of the object, whatever it holds
      */
@@ -1003,10 +1103,10 @@
      *
      * @memberof module:curious.CuriousObjects
      *
-     * @param {Object[]} objects
+     * @param {Array&lt;Object>} objects
      *   An array of objects with the &lt;code>id&lt;/code> property
      *
-     * @return {number[]}
+     * @return {Array&lt;number>}
      *   The set of IDs, with duplicates removed, in the same order as the
      *   input object list
      */
@@ -1037,7 +1137,7 @@
      *
      * @memberof module:curious.CuriousObjects
      *
-     * @param {Object[]} arrayOfObjects The array to turn into an object
+     * @param {Array&lt;Object>} arrayOfObjects The array to turn into an object
      *
      * @return {string} A comma-separated string containing the objects' IDs,
      *                  with duplicates removed, in the same order as the input
@@ -1150,11 +1250,11 @@
    * Rearrange the results from an array of arrays of objects to an object,
    * where each array of objects is named by its appropriate relationship name.
    *
-   * @param {string[]} relationships The relationship names
+   * @param {Array&lt;string>} relationships The relationship names
    * @param {Array&lt;Array&lt;Object>>} objects The objects from each relationship
-   * @param {boolean?} camelCase Whether or not to camel-case the relationship names
+   * @param {boolean=} camelCase Whether or not to camel-case the relationship names
    *
-   * @return {Object&lt;string,Array>} The rearranged results
+   * @return {Object&lt;string, Array>} The rearranged results
    */
   function _convertResultsToOutput(relationships, objects, camelCase) {
     var output = {};
@@ -1184,8 +1284,8 @@
    * Get the final args to send to the Curious server, after filtering down
    * through all of the defaults.
    *
-   * @param {Object} queryArgs Query-specific args
-   * @param {Object} clientDefaultArgs Client-specific args
+   * @param {?Object} queryArgs Query-specific args
+   * @param {?Object} clientDefaultArgs Client-specific args
    *
    * @return {Object} The args, with all defaults filled in hierarchially
    */
@@ -1243,7 +1343,7 @@
    * @class
    * @alias module:curious.CuriousClient
    *
-   * @param {string} curiousURL
+   * @param {!string} curiousURL
    *   The URL of the Curious server
    * @param {function (string, Object): Promise} request
    *   &lt;p>A function that makes a &lt;code>POST&lt;/code> request and returns a Promise
@@ -1255,13 +1355,13 @@
    *   server's response will work. Note that axios.post and $http.post wrap the
    *   response in an object, and so require wrapper functions to be used.
    *   See {@link module:curious.CuriousClient.wrappers} for the wrappers.&lt;/p>
-   * @param {Object} clientDefaultArgs
+   * @param {Object=} clientDefaultArgs
    *   Default parameters to send to the serever with every query performed by
    *   this client--see {@link module:curious.CuriousClient#performQuery} for an
    *   explanation of what each parameter means.
-   * @param {boolean?} quiet
+   * @param {boolean=} quiet
    *   Unless true, log every query to the console.
-   * @param {boolean?} camelCase
+   * @param {boolean=} camelCase
    *   If true, construct camel-cased versions of the JSON objects returned
    *   by the Curious server.
    *
@@ -1273,13 +1373,67 @@
       /**
        * Perform a Curious query and return back parsed objects.
        *
+       * @example
+       * // Here's a many-to-many example
+       * client.performQuery(
+       *   'Document(id__in=[1,2]) ?(Document.entities)',
+       *   ['documents', 'entities'],
+       * ).then(function (results) {
+       *
+       *   console.log(results.objects.documents);
+       *   // Will show an array of documents, as CuriousObject instances:
+       *   // [
+       *   //   CuriousObject({
+       *   //      __model: 'Document',
+       *   //      __url: 'http://somewhere/document/1',
+       *   //      id: 1,
+       *   //      entities: [
+       *   //        // entities associated with document 1
+       *   //      ]
+       *   //      ... other fields of Document objects ...
+       *   //   }),
+       *   //  CuriousObject({
+       *   //      __model: 'Document',
+       *   //      __url: 'http://somewhere/document/2',
+       *   //      id: 2,
+       *   //      entities: [
+       *   //        // entities associated with document 2
+       *   //      ]
+       *   //      ...
+       *   //   }),
+       *   // ]
+       *
+       *   console.log(results.objects.entities);
+       *   // Will show an array of entities, as CuriousObject instances:
+       *   // [
+       *   //   CuriousObject({
+       *   //      __model: 'Entity',
+       *   //      __url: 'http://somewhere/entity/1',
+       *   //      id: 2348,
+       *   //      documents: [
+       *   //        // documents associated with entity 1
+       *   //      ]
+       *   //      ... other fields of Entity objects ...
+       *   //   }),
+       *   //  CuriousObject({
+       *   //      __model: 'Entity',
+       *   //      __url: 'http://somewhere/entity/2',
+       *   //      id: 2725,
+       *   //      documents: [
+       *   //        // documents associated with entity 2
+       *   //      ]
+       *   //      ...
+       *   //   }),
+       *   // ]
+       * });
+       *
        * @memberof module:curious.CuriousClient
        *
        * @param {string} q
        *   The query string
-       * @param {string[]} relationships
+       * @param {Array&lt;string>} relationships
        *   The names of relationships between each joined set of objects
-       * @param {Array&lt;?function>} constructors
+       * @param {Array&lt;?function(Object)>} constructors
        *   An array of constructors for any custom classes, or null for the
        *   default
        * @param {Object} params
@@ -1309,9 +1463,9 @@
        *   this query
        *
        * @return {Promise&lt;{objects: Array, trees: Array}>}
-       *   A promise that resolves to an object containing the parsed objects
-       *   from the query and a tree structure that relates IDs for recursive
-       *   queries
+       *   A promise that resolves to an object containing the objects requested by the query
+       *   and a tree structure that relates IDs for recursive queries
+       *
        */
       performQuery: function (q, relationships, constructors, params, existingObjects) {
         var args;
@@ -1362,10 +1516,10 @@
    * @param {string} defaultModuleName
    *   The default module object name to use if one is not provided--should
    *   be bound to a string when actually used as a wrapper.
-   * @param {Object?} moduleObjectOrFunction
+   * @param {?Object} moduleObjectOrFunction
    *   Either the module to use, like &lt;code>axios&lt;/code>/&lt;code>$http&lt;/code>, or the posting function
    *   itself, like &lt;code>axios.post&lt;/code>.
-   * @param {Object?} options
+   * @param {?Object} options
    *   Additional options to send to the requesting function
    *
    * @return {function(string, Object): Promise}
@@ -1438,10 +1592,10 @@
    * @function
    * @memberof module:curious.CuriousClient.wrappers
    *
-   * @param {Object?} axiosModuleOrFunction
+   * @param {?Object} axiosModuleOrFunction
    *   Either the &lt;code>axios&lt;/code> module itself, or &lt;code>axios.post&lt;/code>--defaults to using
    *   whatever &lt;code>axios&lt;/code> resolves to
-   * @param {Object?} options
+   * @param {?Object} options
    *   Additional options to send to the requesting function
    *
    * @return {function(string, Object): Promise}
@@ -1462,10 +1616,10 @@
    * @function
    * @memberof module:curious.CuriousClient.wrappers
    *
-   * @param {Object?} angularHttpServiceOrPostFunction
+   * @param {?Object} angularHttpServiceOrPostFunction
    *   Either the Angular &lt;code>$http&lt;/code> service object, or &lt;code>$http.post&lt;/code>--defaults
    *   to using whatever &lt;code>$http&lt;/code> resolves to.
-   * @param {Object?} options
+   * @param {?Object} options
    *   Additional options to send to the requesting function
    *
    * @return {function(string, Object): Promise}
@@ -1486,7 +1640,7 @@
    *
    * @param {PolymerElement} ironAjaxElement
    *   The &lt;code>iron-ajax&lt;/code> element being used to make the request
-   * @param {Object?} options
+   * @param {?Object} options
    *   Additional options to send to the requesting function
    *
    * @return {function(string, Object): Promise}
@@ -1546,13 +1700,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Sep 20 2016 14:29:30 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Sep 22 2016 19:54:31 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>

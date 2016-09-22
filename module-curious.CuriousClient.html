@@ -44,7 +44,7 @@
 
     
 
-    <h4 class="name" id="CuriousClient"><span class="type-signature"></span>new CuriousClient<span class="signature">(curiousURL, request, clientDefaultArgs, quiet<span class="signature-attributes">nullable</span>, camelCase<span class="signature-attributes">nullable</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
+    <h4 class="name" id="CuriousClient"><span class="type-signature"></span>new CuriousClient<span class="signature">(curiousURL<span class="signature-attributes">non-null</span>, request, clientDefaultArgs<span class="signature-attributes">opt</span>, quiet<span class="signature-attributes">opt</span>, camelCase<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {Object}</span></h4>
 
     
 
@@ -174,6 +174,8 @@
             
                 <td class="attributes">
                 
+                    &lt;optional><br>
+                
 
                 
 
@@ -207,9 +209,9 @@
             
                 <td class="attributes">
                 
-
+                    &lt;optional><br>
                 
-                    &lt;nullable><br>
+
                 
 
                 
@@ -240,9 +242,9 @@
             
                 <td class="attributes">
                 
-
+                    &lt;optional><br>
                 
-                    &lt;nullable><br>
+
                 
 
                 
@@ -293,7 +295,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1243">line 1243</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1343">line 1343</a>
     </li></ul></dd>
     
 
@@ -466,7 +468,7 @@
             <td class="type">
             
                 
-<span class="param-type">Array.&lt;?function()></span>
+<span class="param-type">Array.&lt;?function(Object)></span>
 
 
             
@@ -830,7 +832,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1288">line 1288</a>
+        <a href="curious.js.html">curious.js</a>, <a href="curious.js.html#line1442">line 1442</a>
     </li></ul></dd>
     
 
@@ -857,9 +859,8 @@
 
         
 <div class="param-desc">
-    A promise that resolves to an object containing the parsed objects
-  from the query and a tree structure that relates IDs for recursive
-  queries
+    A promise that resolves to an object containing the objects requested by the query
+  and a tree structure that relates IDs for recursive queries
 </div>
 
 
@@ -879,6 +880,62 @@
     
 
 
+    <h5>Example</h5>
+    
+    <pre class="prettyprint"><code>// Here's a many-to-many example
+client.performQuery(
+  'Document(id__in=[1,2]) ?(Document.entities)',
+  ['documents', 'entities'],
+).then(function (results) {
+
+  console.log(results.objects.documents);
+  // Will show an array of documents, as CuriousObject instances:
+  // [
+  //   CuriousObject({
+  //      __model: 'Document',
+  //      __url: 'http://somewhere/document/1',
+  //      id: 1,
+  //      entities: [
+  //        // entities associated with document 1
+  //      ]
+  //      ... other fields of Document objects ...
+  //   }),
+  //  CuriousObject({
+  //      __model: 'Document',
+  //      __url: 'http://somewhere/document/2',
+  //      id: 2,
+  //      entities: [
+  //        // entities associated with document 2
+  //      ]
+  //      ...
+  //   }),
+  // ]
+
+  console.log(results.objects.entities);
+  // Will show an array of entities, as CuriousObject instances:
+  // [
+  //   CuriousObject({
+  //      __model: 'Entity',
+  //      __url: 'http://somewhere/entity/1',
+  //      id: 2348,
+  //      documents: [
+  //        // documents associated with entity 1
+  //      ]
+  //      ... other fields of Entity objects ...
+  //   }),
+  //  CuriousObject({
+  //      __model: 'Entity',
+  //      __url: 'http://somewhere/entity/2',
+  //      id: 2725,
+  //      documents: [
+  //        // documents associated with entity 2
+  //      ]
+  //      ...
+  //   }),
+  // ]
+});</code></pre>
+
+
 
         
     
@@ -896,13 +953,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-curious.html">curious</a></li></ul><h3>Classes</h3><ul><li><a href="module-curious.CuriousClient.html">CuriousClient</a></li><li><a href="module-curious.CuriousObjects.defaultType.html">defaultType</a></li><li><a href="module-curious.CuriousQuery.html">CuriousQuery</a></li></ul><h3>Namespaces</h3><ul><li><a href="module-curious.CuriousClient.wrappers.html">wrappers</a></li><li><a href="module-curious.CuriousObjects.html">CuriousObjects</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Tue Sep 20 2016 14:29:30 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Sep 22 2016 19:54:32 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
