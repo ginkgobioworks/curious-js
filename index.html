@@ -44,16 +44,41 @@
 
     <section>
         <article><h1>curious-js</h1><p>JavaScript consumer code for Curious APIs.</p>
-<h2>Usage</h2><p>There are two main parts to using the Curious from Javascript: <code>CuriousClient</code>,
+<h2>Usage</h2><h3>Installation</h3><p><code>curious-js</code> is available both from <a href="https://bower.io/search/?q=curious-js">bower</a> and from <a href="https://www.npmjs.com/package/curious-js">npm</a>.</p>
+<h3>Importing</h3><p><code>curious-js</code> has been written using the <a href="https://github.com/umdjs/umd">UMD</a> module pattern. This
+pattern should be compatible with AMD/require.js, CommonJS/node.js, direct loading in the browser,
+and Babel module variants. Requiring or loading the <code>curious.js</code> file will create a module (with the
+default name <code>curious</code>) in whatever system you are using.</p>
+<h3>Using</h3><p>There are two main parts to using Curious from Javascript: <code>CuriousClient</code>,
 and <code>CuriousQuery</code>.</p>
-<p>First, create an instance of <code>CuriousClient</code> that points to your curious
-server. You are responsible for picking and using a request method that works
-for you. <code>CuriousClient</code> provides some convenience wrappers, but you can make
-any asynchronous transport layer work.</p>
-<pre class="prettyprint source lang-javascript"><code>var curiousClient = new curious.CuriousClient(CURIOUS_URL, curious.CuriousClient.wrappers.axios(axios), ...);</code></pre><p>Then, construct a <code>CuriousQuery</code> and perform it on the server using the client.
-Attach any callbacks to the Promise object returned by the <code>perform</code> method. The
-results of the query will be passed to the callback.</p>
-<p>Here's a trivial example. The results, of course, depend on the schema on the curious server.</p>
+<p>First, create an instance of <code>CuriousClient</code> that points to your Curious server. You are responsible
+for picking and using a request method that works for you. <code>CuriousClient</code> provides some convenience
+wrappers, but you can make any asynchronous transport layer work by passing a custom function as the
+second parameter to the client constructor. Note that if you're using jQuery, <code>jQuery.post</code> does not
+require any wrapping and can be passed as the second parameter directly.</p>
+<pre class="prettyprint source lang-javascript"><code>// example using Axios
+var curiousClient = new curious.CuriousClient(CURIOUS_URL, curious.CuriousClient.wrappers.axios(axios), ...);
+
+// example using a custom request method
+var curiousClient = new curious.CuriousClient(CURIOUS_URL, function (url, data) {
+  return new Promise(function (resolve, reject) {
+    var result;
+    var error;
+
+    // perform some asynchronous access
+
+    if (error) {
+      reject(error);
+    } else {
+      resolve(result);
+    }
+  });
+}, ...);</code></pre><p>Then, construct a <code>CuriousQuery</code> and perform it on the server using the client. Attach any callbacks
+to the Promise object returned by the <code>perform</code> method, or directly to the query object. They will
+be executed in the order they were attached, before any callbacks attached later. The results of the
+query will be passed to the callback.</p>
+<p>Here's a trivial example. The results, of course, depend on the schema on the Curious server; the
+example uses a made up schema consiting of Document and Section entities in a 1:many relationship.</p>
 <pre class="prettyprint source lang-javascript"><code>// A simple node.js use case; works similarly on the front end, minus module loading
 
 const util = require('util');
@@ -106,7 +131,9 @@ q.perform(client).then((data) => {
   } catch (e) {
     console.error(e);
   }
-}, console.error);</code></pre><p>The output from this example would look something like this, depending on the schema:</p>
+
+  return data;
+}, console.error);</code></pre><p>The output from the example code above would look something like this, depending on the data:</p>
 <pre class="prettyprint source lang-javascript"><code>data:
 { objects: { documents: [ [Object] ], sections: [ [Object], [Object] ] },
   trees: [ null, null ] }
@@ -218,7 +245,11 @@ CuriousObject {
        __model: 'Document',
        id: 12345,
        ...
-       sections: [Object] } ] }</code></pre><p>The API is explained in detail in  the documentation.</p></article>
+       sections: [Object] } ] }</code></pre><p>The API is explained in detail in  the documentation.</p>
+<h2>Development</h2><p>This project provides a basic Dockerfile that builds a Docker container capable of running unit
+tests. To run the tests, bring up the container with <code>docker-compose up</code>.</p>
+<h3>Test framework</h3><p>The tests are written in <a href="https://mochajs.org/">mocha</a>, with <a href="http://chaijs.com/">chai</a> expect-style
+assertions.</p></article>
     </section>
 
 
@@ -235,7 +266,7 @@ CuriousObject {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Thu Sep 22 2016 19:54:31 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Fri Sep 30 2016 17:17:18 GMT-0400 (EDT)
 </footer>
 
 <script> prettyPrint(); </script>
