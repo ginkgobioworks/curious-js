@@ -43,7 +43,7 @@
 
 
     <section>
-        <article><h1>curious-js</h1><p>JavaScript consumer code for Curious APIs.</p>
+        <article><h1>curious-js</h1><p>JavaScript consumer code for Curious APIs. <a href="https://travis-ci.org/ginkgobioworks/curious-js"><img src="https://travis-ci.org/ginkgobioworks/curious-js.svg?branch=v2" alt="Build Status"></a></p>
 <h2>Usage</h2><h3>Installation</h3><p><code>curious-js</code> is available both from <a href="https://bower.io/search/?q=curious-js">bower</a> and from <a href="https://www.npmjs.com/package/curious-js">npm</a>.</p>
 <h3>Importing</h3><p><code>curious-js</code> has been written using the <a href="https://github.com/umdjs/umd">UMD</a> module pattern. This
 pattern should be compatible with AMD/require.js, CommonJS/node.js, direct loading in the browser,
@@ -51,21 +51,29 @@ and Babel module variants. Requiring or loading the <code>curious.js</code> file
 default name <code>curious</code>) in whatever system you are using.</p>
 <h3>Using</h3><p>There are two main parts to using Curious from Javascript: <code>CuriousClient</code>,
 and <code>CuriousQuery</code>.</p>
-<p>First, create an instance of <code>CuriousClient</code> that points to your Curious server. You are responsible
-for picking and using a request method that works for you. <code>CuriousClient</code> provides some convenience
-wrappers, but you can make any asynchronous transport layer work by passing a custom function as the
-second parameter to the client constructor. Note that if you're using jQuery, <code>jQuery.post</code> does not
-require any wrapping and can be passed as the second parameter directly.</p>
-<pre class="prettyprint source lang-javascript"><code>// example using Axios
+<p>First, create an instance of <code>CuriousClient</code> that points to your Curious server, providing a
+server URL and a request function.</p>
+<p><em>The server URL provided to the client should point to the Curious root endpoint, <strong>not</strong> to the
+query endpoint (<code>/q/</code>)on the server</em>. The code will not break if you make this mistake, but the
+behavior is deprecated.</p>
+<p>You must also provide a request method. You are responsible for picking and using a request
+method/transport layer that works for you. <code>CuriousClient</code> provides convenience wrappers for
+common request methods, but you can make any asynchronous transport layer work by passing a custom
+function as the second parameter to the client constructor. The function must take the URL as its
+first parameter and an object payload as its second parameter, make a <code>POST</code> request to the curious
+server, and return a Promise (or any thenable) that resolves to the JSON data returned by the
+server. Note that if you're using jQuery, <code>jQuery.post</code> does not require any wrapping and can be
+passed as the second parameter directly.</p>
+<pre class="prettyprint source lang-javascript"><code>// Example using Axios
 var curiousClient = new curious.CuriousClient(CURIOUS_URL, curious.CuriousClient.wrappers.axios(axios), ...);
 
-// example using a custom request method
+// Example using a custom request method
 var curiousClient = new curious.CuriousClient(CURIOUS_URL, function (url, data) {
   return new Promise(function (resolve, reject) {
     var result;
     var error;
 
-    // perform some asynchronous access
+    // Perform some asynchronous access
 
     if (error) {
       reject(error);
@@ -76,7 +84,7 @@ var curiousClient = new curious.CuriousClient(CURIOUS_URL, function (url, data) 
 }, ...);</code></pre><p>Then, construct a <code>CuriousQuery</code> and perform it on the server using the client. Attach any callbacks
 to the Promise object returned by the <code>perform</code> method, or directly to the query object. They will
 be executed in the order they were attached, before any callbacks attached later. The results of the
-query will be passed to the callback.</p>
+query will be passed to the first callback.</p>
 <p>Here's a trivial example. The results, of course, depend on the schema on the Curious server; the
 example uses a made up schema consiting of Document and Section entities in a 1:many relationship.</p>
 <pre class="prettyprint source lang-javascript"><code>// A simple node.js use case; works similarly on the front end, minus module loading
@@ -245,11 +253,23 @@ CuriousObject {
        __model: 'Document',
        id: 12345,
        ...
-       sections: [Object] } ] }</code></pre><p>The API is explained in detail in  the documentation.</p>
-<h2>Development</h2><p>This project provides a basic Dockerfile that builds a Docker container capable of running unit
-tests. To run the tests, bring up the container with <code>docker-compose up</code>.</p>
+       sections: [Object] } ] }</code></pre><p>The API is explained in detail in the documentation.</p>
+<h2>Development</h2><p>Development is carried out through an included Docker environment.</p>
+<h3>Docker</h3><p>The project provides a Dockerfile that builds a container capable of running the unit tests and
+scripts. To run the tests, bring up the container with <code>docker-compose up</code>. Any of the scripts shown
+to be run below from a shell with <code>npm run</code> can be executed in an instance of the container with
+<code>docker-compose run --rm [script name]</code>.</p>
+<h3>REPL</h3><p>A script that opens up a node.js REPL and loads curious.js as <code>curious</code> is provided with
+<code>npm run repl</code>.</p>
 <h3>Test framework</h3><p>The tests are written in <a href="https://mochajs.org/">mocha</a>, with <a href="http://chaijs.com/">chai</a> expect-style
-assertions.</p></article>
+assertions. Tests can be run with <code>npm test</code>.</p>
+<p>Coding conventions and linting are enforced at the unit test level, but can also be run
+independently with <code>npm run lint</code>.</p>
+<h3>Documentation</h3><p>Any new code added to <code>curious.js</code> must be documented in a manner consistent with existing
+documentation.</p>
+<p>JSDoc documentation can be generated into the <code>doc/</code> subdirectory from the source code and README
+with <code>npm run make_doc</code>. It can be updated on the project website automatically with <code>npm run
+release_doc</code>.</p></article>
     </section>
 
 
@@ -266,7 +286,7 @@ assertions.</p></article>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Fri Sep 30 2016 17:17:18 GMT-0400 (EDT)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Nov 30 2016 23:41:57 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>
