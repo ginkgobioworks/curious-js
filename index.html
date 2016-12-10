@@ -43,18 +43,19 @@
 
 
     <section>
-        <article><h1>curious-js</h1><p>JavaScript consumer code for Curious APIs. <a href="https://travis-ci.org/ginkgobioworks/curious-js"><img src="https://travis-ci.org/ginkgobioworks/curious-js.svg?branch=v2" alt="Build Status"></a></p>
-<h2>Usage</h2><h3>Installation</h3><p><code>curious-js</code> is available both from <a href="https://bower.io/search/?q=curious-js">bower</a> and from <a href="https://www.npmjs.com/package/curious-js">npm</a>.</p>
+        <article><h1>curious-js</h1><p>JavaScript consumer code for Curious APIs.</p>
+<p><a href="https://travis-ci.org/ginkgobioworks/curious-js"><img src="https://travis-ci.org/ginkgobioworks/curious-js.svg?branch=v2" alt="Build Status"></a></p>
+<h2>Usage</h2><h3>Installation</h3><p><code>curious-js</code> is available both from <a href="https://bower.io/search/?q=curious-js">bower</a> and from
+<a href="https://www.npmjs.com/package/curious-js">npm</a>.</p>
 <h3>Importing</h3><p><code>curious-js</code> has been written using the <a href="https://github.com/umdjs/umd">UMD</a> module pattern. This
 pattern should be compatible with AMD/require.js, CommonJS/node.js, direct loading in the browser,
 and Babel module variants. Requiring or loading the <code>curious.js</code> file will create a module (with the
 default name <code>curious</code>) in whatever system you are using.</p>
-<h3>Using</h3><p>There are two main parts to using Curious from Javascript: <code>CuriousClient</code>,
-and <code>CuriousQuery</code>.</p>
+<h3>Using</h3><p>There are two main parts to using Curious from JavaScript: <code>CuriousClient</code> and <code>CuriousQuery</code>.</p>
 <p>First, create an instance of <code>CuriousClient</code> that points to your Curious server, providing a
 server URL and a request function.</p>
 <p><em>The server URL provided to the client should point to the Curious root endpoint, <strong>not</strong> to the
-query endpoint (<code>/q/</code>)on the server</em>. The code will not break if you make this mistake, but the
+query endpoint (<code>/q/</code>) on the server</em>. The code will not break if you make this mistake, but the
 behavior is deprecated.</p>
 <p>You must also provide a request method. You are responsible for picking and using a request
 method/transport layer that works for you. <code>CuriousClient</code> provides convenience wrappers for
@@ -254,17 +255,28 @@ CuriousObject {
        id: 12345,
        ...
        sections: [Object] } ] }</code></pre><p>The API is explained in detail in the documentation.</p>
-<h2>Development</h2><p>Development is carried out through an included Docker environment.</p>
+<h2>Development</h2><p>Development is carried out through an included Docker environment and Travis CI.</p>
+<h3>CI</h3><p>Continuous integration is performed with <a href="https://travis-ci.org/ginkgobioworks/curious-js">Travis CI</a>.
+And any tagged commits on the main branch (v2), which update bower by default, are also automatically
+deployed to NPM.</p>
+<h3>Deployment</h3><p>To deploy the code:</p>
+<ol>
+<li>Get on the defaulmaint branch <code>git checkout v2</code> [<em>not master</em>]</li>
+<li>Bump the version: <code>npm version [type] -m &quot;Bump version to %s&quot;</code></li>
+<li>Push to the origin with tags: <code>git push &amp;&amp; git push ---tags</code></li>
+</ol>
+<p>Minification and source map generation happens automatically before deployment and the minified code
+is deployed to both npm and bower. No minified code should be checked in.</p>
 <h3>Docker</h3><p>The project provides a Dockerfile that builds a container capable of running the unit tests and
 scripts. To run the tests, bring up the container with <code>docker-compose up</code>. Any of the scripts shown
 to be run below from a shell with <code>npm run</code> can be executed in an instance of the container with
 <code>docker-compose run --rm [script name]</code>.</p>
-<h3>REPL</h3><p>A script that opens up a node.js REPL and loads curious.js as <code>curious</code> is provided with
+<h3>REPL</h3><p>A script that opens up a node.js REPL and loads curious.js as <code>curious</code> is available via
 <code>npm run repl</code>.</p>
 <h3>Test framework</h3><p>The tests are written in <a href="https://mochajs.org/">mocha</a>, with <a href="http://chaijs.com/">chai</a> expect-style
 assertions. Tests can be run with <code>npm test</code>.</p>
-<p>Coding conventions and linting are enforced at the unit test level, but can also be run
-independently with <code>npm run lint</code>.</p>
+<p>Coding conventions and linting are enforced at the unit test level but can also be run independently
+with <code>npm run lint</code>.</p>
 <h3>Documentation</h3><p>Any new code added to <code>curious.js</code> must be documented in a manner consistent with existing
 documentation.</p>
 <p>JSDoc documentation can be generated into the <code>doc/</code> subdirectory from the source code and README
@@ -286,7 +298,7 @@ release_doc</code>.</p></article>
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Wed Nov 30 2016 23:41:57 GMT-0500 (EST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.3.3</a> on Sat Dec 10 2016 03:31:07 GMT-0500 (EST)
 </footer>
 
 <script> prettyPrint(); </script>
