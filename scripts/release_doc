@@ -1,6 +1,9 @@
-#!/bin/bash -e -x
+#!/bin/bash
 
 # release_doc - generate JSDoc for the project and push it to GitHub Pages
+
+set -e
+set -x
 
 cd "`dirname $0`/.."
 

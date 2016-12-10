@@ -8,6 +8,6 @@ cd "`dirname $0`/.."
 
 mkdir -p doc
 rm -rf doc/*
-./node_modules/.bin/jsdoc --destination doc curious.js README.md "$@"
+jsdoc --destination doc curious.js README.md "$@"
 
-cd -
+cd - 1>/dev/null
