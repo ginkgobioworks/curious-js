@@ -1,0 +1,6 @@
+*/.git*
+**/*.zip
+.tmp
+doc
+node_modules
+bower_components

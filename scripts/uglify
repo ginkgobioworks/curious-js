@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+# uglify - compress the js
+
+cd "`dirname $0`/.."
+
+uglifyjs curious.js \
+  -o curious.min.js \
+  --compress \
+  --mangle \
+  --comments \
+  --source-map curious.js.map
+
+cd - 1>/dev/null

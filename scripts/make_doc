@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+set -x
+
+# make_doc - generate JSDoc for the project
+
+cd "`dirname $0`/.."
+
+mkdir -p doc
+rm -rf doc/*
+jsdoc --destination doc curious.js README.md "$@"
+
+cd - 1>/dev/null

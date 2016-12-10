@@ -1,0 +1,26 @@
+language: node_js
+node_js:
+- node
+cache:
+  directories:
+  - node_modules
+deploy:
+  - provider: npm
+    email: misha@ginkgobioworks.com
+    api_key:
+      secure: RaHu9nAQUkPyp6LZ2mEvD5zbdXeHIZrP20iTT4N5kl3kB8BmXQBVphJ4rkcmdRYT13JZIlXzIvqWE8QdK+PmapOIWaGJ4t5XQ0Hjrqm5iUutDzvkypKBl6R44SlhIAp4KwWbEHeDkVZnhHZFirhgJMADbROBvBxTYAORab2zMmWWP1QbtLNjZ0RA1GPfM4KA+XVQsNwKTvlVZDQN8pptVsxfLI+MpDkGiZbq2zs0m5MUzMRVit2yN+HbSKCZRNU46cVFkA0SaDKTShHbydFvFLCgIQrOei+GzLu0PQXyjFLyz+lgkEdRgEp6bjC+ZrpU3vDKMnzo0pucpa8LTfUFxua/OLV6MVBcjB6/BeifMyd9R9yDfZcxlePSwyiiwWdR79bWnQckrN+jf5RaUk03GVmn6oo2zXK8kFZKIQw9rYfBKyisN5I9apqEyOmGQU7Uk6oqcUU8rYAsSp+8FQ9pcPXd2PXj9HkjzakGPWutHlb+5EKRy2pjX/G2EuJUhVzs4f3TPuAEfNnG/mz5TaMU7T1XpaZ0NQ5yTgr0NRNt2lgLV5Zej6sqkE3evMEGwtC1GSkbWO3kaigBVDi3Ys09fOUzRBZebaO63exzwqVKA15D4gAsaNoReh9eelhOix4PYvlnb4huxgy1Jf5SuNSjHblAm8I2UoTAl4MRle940fQ=
+    on:
+      tags: true
+      repo: ginkgobioworks/curious-js
+      branch: v2
+  - provider: releases
+    api_key:
+      secure: mZnUcDyugRF5av1j88HVrdi5YcKwmDP9kDbpIfzuPUCNnv3r4nr/8hdwwgFv1vuZ27cUDAsaVpQZjCAsBEJJEnIk2p/ou5SKy4ZXCciUGP1k6LWL1QE1cIR8gf3u0o5713AhJYVRQSM6SmURZjNiPcXZ69709okGeksCtOpXWLgJm2ZRWX0O8sUxBN1Tke0XMZ26OFWOiFZ756E/1yK8q4X1gLv2y+ST33t7KvyNw+tHeVKPeO5zs1S4+ULL8EOj1sKwO40VpdavQslpvTQrYVeT7bqv5QKwPMVfqFyQHJwBR/wa6g3reMStOg2JzBRLGolZ4DG7MZnmAAVFH0eNJCxkykqEPRKTHTLl8Ca+7tLQcqNKdUmsFmO8czT7YWiONWqWu2ESdAqLcvnoJtHfwk5ZMOt5MvAuAWUd9SrUtAHaiIoCjU0na8bCrop57PU74LlzlQt8uORPXNu9EaH9jZ022DRS5agOeiZkTgYEKYdm03uGFZMGhAkN0D0VmAIoz6c5m0CNa6EIuTCtspduzvO0kmxVs5rms+N+qgTuaiBDGlQmBrr/541SBy28alsoUrjkj2WdtYQBzoh7N6y8zi1Sy0k9nd2j2foHVXUho+hmMjNTJl14z0bAHQ1KHX4b7ObOOpbMfXSkrmNn0HKxqPLiV+/3FKw/7nLEc2L6/Hg=
+    file:
+      - curious.min.js
+      - curious.js.map
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: ginkgobioworks/curious-js
+      branch: v2

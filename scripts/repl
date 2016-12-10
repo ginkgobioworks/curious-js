@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+// repl - run a REPL with curious.js already loaded
+
+var repl = require('repl');
+var curious = require('../curious');
+
+var replServer = repl.start({
+  prompt: 'curious-js > ',
+  ignoreUndefined: true,
+});
+
+replServer.context.curious = curious;
+
+require('repl.history')(replServer, process.env.HOME + '/.node_history');

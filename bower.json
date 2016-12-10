@@ -1,9 +1,42 @@
 {
   "name": "curious-js",
-  "version": "0.0.1",
-  "ignore": [ ],
-  "main": [
-    "./curious.js"
+  "repository": "https://github.com/ginkgobioworks/curious-js",
+  "description": "JavaScript consumer code for Curious APIs.",
+  "keywords": [
+    "curious",
+    "graph-db",
+    "query",
+    "client"
   ],
-  "dependencies": { }
+  "authors": [
+    {
+      "name": "Benjie Chen",
+      "email": "benjie@ginkgobioworks.com"
+    },
+    {
+      "name": "Misha Wolfson",
+      "email": "misha@ginkgobioworks.com",
+      "homepage": "http://myw.github.io"
+    }
+  ],
+  "homepage": "http://ginkgobioworks.github.io/curious-js",
+  "license": "MIT",
+  "ignore": [
+    ".*",
+    "Dockerfile",
+    "doc",
+    "docker-compose.yml",
+    "package.json",
+    "scripts",
+    "tests"
+  ],
+  "main": "./curious.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "axios": "~0.8.1",
+    "chai": "~2.3.0",
+    "jsdoc": "~3.3.0",
+    "mocha": "~2.2.5"
+  }
 }

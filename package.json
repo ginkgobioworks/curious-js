@@ -1,0 +1,53 @@
+{
+  "name": "curious-js",
+  "repository": "https://github.com/ginkgobioworks/curious-js",
+  "description": "JavaScript consumer code for Curious APIs.",
+  "keywords": [
+    "curious",
+    "graph-db",
+    "query",
+    "client"
+  ],
+  "author": {
+    "name": "Benjie Chen",
+    "email": "benjie@ginkgobioworks.com"
+  },
+  "contributors": [
+    {
+      "name": "Misha Wolfson",
+      "email": "misha@ginkgobioworks.com",
+      "homepage": "http://myw.github.io"
+    }
+  ],
+  "homepage": "http://ginkgobioworks.github.io/curious-js",
+  "bugs": "https://github.com/ginkgobioworks/curious-js/issues",
+  "version": "2.4.2",
+  "license": "MIT",
+  "main": "./curious.js",
+  "scripts": {
+    "test": "mocha tests",
+    "prepublish": "npm run uglify && npm run make_doc",
+    "postpublish": "npm run release_doc",
+
+    "lint": "eslint curious.js tests && echo OK",
+    "make_doc": "./scripts/make_doc",
+    "release_doc": "./scripts/release_doc",
+    "repl": "./scripts/repl",
+    "uglify": "./scripts/uglify"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "axios": "~0.5.4",
+    "babel-eslint": "^7.1.1",
+    "chai": "~2.3.0",
+    "eslint-config-airbnb-es5": "^1.1.0",
+    "eslint-plugin-react": "^6.7.1",
+    "jsdoc": "~3.3.0",
+    "mocha": "~2.2.5",
+    "mocha-eslint": "^3.0.1",
+    "uglify-js": "^2.7.5"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  }
+}

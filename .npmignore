@@ -1,0 +1,8 @@
+.*
+Dockerfile
+bower.json
+bower_components
+docker-compose.yml
+node_modules
+scripts
+tests
