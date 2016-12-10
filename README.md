@@ -254,8 +254,16 @@ Continuous integration is performed with [Travis CI](https://travis-ci.org/ginkg
 And any tagged commits on the main branch (v2), which update bower by default, are also automatically
 deployed to NPM.
 
-Minification and source map generation happens automatically and the minified code is deployed to
-both npm and bower. No minified code should be checked in.
+### Deployment
+
+To deploy the code:
+
+1. Get on the defaulmaint branch `git checkout v2` [*not master*]
+2. Bump the version: `npm version [type] -m "Bump version to %s"`
+3. Push to the origin with tags: `git push && git push ---tags`
+
+Minification and source map generation happens automatically before deployment and the minified code
+is deployed to both npm and bower. No minified code should be checked in.
 
 ### Docker
 
