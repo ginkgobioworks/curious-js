@@ -1,12 +1,15 @@
 # curious-js
 
-JavaScript consumer code for Curious APIs. [![Build Status](https://travis-ci.org/ginkgobioworks/curious-js.svg?branch=v2)](https://travis-ci.org/ginkgobioworks/curious-js)
+JavaScript consumer code for Curious APIs.
+
+[![Build Status](https://travis-ci.org/ginkgobioworks/curious-js.svg?branch=v2)](https://travis-ci.org/ginkgobioworks/curious-js)
 
 ## Usage
 
 ### Installation
 
-`curious-js` is available both from [bower](https://bower.io/search/?q=curious-js) and from [npm](https://www.npmjs.com/package/curious-js).
+`curious-js` is available both from [bower](https://bower.io/search/?q=curious-js) and from
+[npm](https://www.npmjs.com/package/curious-js).
 
 ### Importing
 
@@ -17,14 +20,13 @@ default name `curious`) in whatever system you are using.
 
 ### Using
 
-There are two main parts to using Curious from Javascript: `CuriousClient`,
-and `CuriousQuery`.
+There are two main parts to using Curious from JavaScript: `CuriousClient` and `CuriousQuery`.
 
 First, create an instance of `CuriousClient` that points to your Curious server, providing a
 server URL and a request function.
 
 _The server URL provided to the client should point to the Curious root endpoint, **not** to the
-query endpoint (`/q/`)on the server_. The code will not break if you make this mistake, but the
+query endpoint (`/q/`) on the server_. The code will not break if you make this mistake, but the
 behavior is deprecated.
 
 You must also provide a request method. You are responsible for picking and using a request
@@ -243,7 +245,17 @@ The API is explained in detail in the documentation.
 
 ## Development
 
-Development is carried out through an included Docker environment.
+Development is carried out through an included Docker environment and Travis CI.
+
+
+### CI
+
+Continuous integration is performed with [Travis CI](https://travis-ci.org/ginkgobioworks/curious-js).
+And any tagged commits on the main branch (v2), which update bower by default, are also automatically
+deployed to NPM.
+
+Minification and source map generation happens automatically and the minified code is deployed to
+both npm and bower. No minified code should be checked in.
 
 ### Docker
 
@@ -254,7 +266,7 @@ to be run below from a shell with `npm run` can be executed in an instance of th
 
 ### REPL
 
-A script that opens up a node.js REPL and loads curious.js as `curious` is provided with
+A script that opens up a node.js REPL and loads curious.js as `curious` is available via
 `npm run repl`.
 
 ### Test framework
@@ -262,8 +274,8 @@ A script that opens up a node.js REPL and loads curious.js as `curious` is provi
 The tests are written in [mocha](https://mochajs.org/), with [chai](http://chaijs.com/) expect-style
 assertions. Tests can be run with `npm test`.
 
-Coding conventions and linting are enforced at the unit test level, but can also be run
-independently with `npm run lint`.
+Coding conventions and linting are enforced at the unit test level but can also be run independently
+with `npm run lint`.
 
 ### Documentation
 

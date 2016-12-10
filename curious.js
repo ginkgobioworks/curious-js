@@ -1,8 +1,9 @@
 /* global define */
 /**
- * Module for curious client-side query construction and JSON parsing
+ * curious.js - JavaScript consumer code for Curious APIs.
  *
- * @module curious
+ * Copyright (c) 2015 Ginkgo BIoworks, Inc.
+ * @license MIT
  */
 (function _umd(global, factory) {
   // UMD Format for exports. Works with all module systems: AMD/RequireJS, CommonJS, and global
@@ -22,6 +23,12 @@
     global.curious = mod.exports;
   }
 })(this, function _curiousUmdFactory(exports) {
+  /**
+   * Curious JavaScript client and query construction
+   *
+   * @module curious
+   */
+
   'use strict';
 
   // For node.js and CommonJS

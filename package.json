@@ -27,10 +27,12 @@
   "scripts": {
     "lint": "./scripts/lint",
     "make_doc": "./scripts/make_doc",
-    "prepublish": "./scripts/make_doc",
+    "prepublish": "npm run uglify && npm run make_doc",
+    "postpublish": "npm run release_doc",
     "release_doc": "./scripts/release_doc",
     "repl": "./scripts/repl",
-    "test": "./scripts/run_tests"
+    "test": "./scripts/run_tests",
+    "uglify": "./scripts/uglify"
   },
   "dependencies": {},
   "devDependencies": {
@@ -41,7 +43,8 @@
     "eslint-plugin-react": "^6.7.1",
     "jsdoc": "~3.3.0",
     "mocha": "~2.2.5",
-    "mocha-eslint": "^3.0.1"
+    "mocha-eslint": "^3.0.1",
+    "uglify-js": "^2.7.5"
   },
   "engines": {
     "node": ">=0.10.0"
